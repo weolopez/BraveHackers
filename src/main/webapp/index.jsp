@@ -24,5 +24,11 @@
     <li><a href="parameters.jsp">Server info page</a></li>
 </ul>
 
+
+<h2>Who can make changes?</h2>
+<ul>
+    <li><a href="http://dev.weolopez.com">Mauricio from ASG can!</a></li>
+</ul>
+
 </body>
 </html>
