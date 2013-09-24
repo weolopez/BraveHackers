@@ -28,6 +28,7 @@
 <h2>Who can make changes?</h2>
 <ul>
     <li><a href="http://dev.weolopez.com">Mauricio from ASG can!</a></li>
+    <li><a href="http://dev.weolopez.com">Mauricio from Corp can!</a></li>
 </ul>
 
 </body>
