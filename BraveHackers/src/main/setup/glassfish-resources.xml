@@ -8,6 +8,6 @@
     <description>mySQLPool</description>
     <property name="URL" value="jdbc:mysql://localhost:3306/world?zeroDateTimeBehavior=convertToNull"/>
     <property name="User" value="root"/>
-    <property name="Password" value="tronic"/>
+    <property name="Password" value="rootuser"/>
   </jdbc-connection-pool>
 </resources>
