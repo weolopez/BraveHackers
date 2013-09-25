@@ -30,7 +30,7 @@
     <li><a href="http://dev.weolopez.com">Mauricio from ASG can!</a></li>
     <li><a href="http://dev.weolopez.com">Mauricio from Corp can!</a></li>
     <li><a href="http://dev.weolopez.com">Kelley from Athens can!</a></li>    
-    <li><a href="http://dev.weolopez.com">Ram from Registration can!</a></li>
+    <li><a href="http://dev.weolopez.com">Ram from Registration can!</a> </li>
 </ul>
 
 </body>
