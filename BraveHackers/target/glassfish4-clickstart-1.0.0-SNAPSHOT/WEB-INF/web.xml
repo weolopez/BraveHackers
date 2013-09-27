@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ Copyright 2010-2013, CloudBees Inc.
   ~
@@ -13,14 +14,9 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<web-app
-        xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-        id="glassfish4-clickstart" version="3.1" metadata-complete="false">
+<web-app id="glassfish4-clickstart" metadata-complete="false" version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <display-name>glassfish4-clickstart</display-name>
     <distributable/>
-    
     <!--
     <resource-ref> declaration is NOT mandatory, Glassfish4 discovers the datasource without <resource-ref> declaration
 
@@ -31,6 +27,9 @@
         <res-sharing-scope>Shareable</res-sharing-scope>
     </resource-ref>
     -->
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
     <security-constraint>
         <display-name>protected-pages</display-name>
         <web-resource-collection>
