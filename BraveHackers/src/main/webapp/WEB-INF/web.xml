@@ -15,7 +15,7 @@
   ~ limitations under the License.
   -->
 <web-app id="glassfish4-clickstart" metadata-complete="false" version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-    <display-name>glassfish4-clickstart</display-name>
+    <display-name>BraveHackers</display-name>
     <distributable/>
     <!--
     <resource-ref> declaration is NOT mandatory, Glassfish4 discovers the datasource without <resource-ref> declaration
@@ -28,7 +28,7 @@
     </resource-ref>
     -->
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>index.html</welcome-file>
     </welcome-file-list>
     <security-constraint>
         <display-name>protected-pages</display-name>
