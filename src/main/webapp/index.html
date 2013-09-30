@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+    <head>
+        <meta charset="utf-8">
+        <title>My AngularJS App</title>
+        <link rel="stylesheet" href="css/app.css"/>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
+
+    </head>
+    <body>
+        <ul class="menu">
+            <li><a href="#/view1">view1</a></li>
+            <li><a href="#/view2">view2</a></li>            
+        </ul>
+
+        <h1>Agenda</h1>    
+        <ul>
+            <h3>Introductions (Who am I, Why I joined, What am I interested in, How can I contribute)</h3>
+            <h3>Keys to Success</h3>
+            <li>Hack-a-thon Rules</li>
+            <li>Preparidness (tools, technology, plan)</li>
+            <li>Schedule (meetings, builds, update calendars (show busy))</li>
+            <li>Communication  ( quick decisions, who is doing what, raise flags quickly )</li>
+            <h3>Needs</h3> 
+            <li>Create Schedule</li>
+            <li>Agree on technology (See How can I contribute)</li>
+            <li>Identify Gaps (Authentication, Server/Client Communications, Server/Client technolgoes...)</li>
+            <h3>Next Steps</h3>
+            <li>Environment Prep</li>
+            <li>Learning (what do I focus on -see what am I interested in)</li>
+        </ul>
+        <textarea style="width: 700px;height: 300px;">
+        Tools: 
+Front End
+AngularJS:  Mauricio
+Bootstrap: Jason
+Less CSS:
+PhoneGap(Steve):  Can we use it as a frontend framework
+HTML5 & ?: 
+       Local Storage::  Ram
+       Location: Mauricio
+       WebRTC: Mauricio
+      
+
+Back End
+Authentication??  Low Priority , Most likely OAuth,  Servlet filter:  Mauricio, Kelley
+REST API : Ram,  Kelley
+Backend DB:  REST API would call DB access code, rebuild DB on deploy?  JPA : Steve , Ram
+
+TESTING: 
+Test in CloudBees
+        </textarea>
+
+        <!--div ng-view ng-animate="{enter: 'animate-enter', leave: 'animate-leave'}">
+            <div>Angular seed app: v<span app-version></span></div>
+        </div-->
+        <script src="lib/jquery/jquery.js"></script>
+        <script src="lib/angular/angular1.2.js"></script>
+        <script src="lib/angular/angular-animate1.2.js"></script>
+        <script src="lib/angular/angular-route1.2.js"></script>
+        <script src="lib/bootstrap/bootstrap3.0.min.js"></script>
+        <script src="lib/mongolabResourceHttp/mongolabResourceHttp.js"></script>
+        <script src="lib/ng-grid/ng-grid-2.0.7.debug.js"></script>
+        <script src="lib/bootstrap/ui-bootstrap-tpls-0.5.0.js"></script>  
+        <script src="js/app.js"></script>
+        <script src="js/services.js"></script>
+        <script src="js/controllers.js"></script>
+        <script src="js/filters.js"></script>
+        <script src="js/directives.js"></script>
+    </body>
+</html>
