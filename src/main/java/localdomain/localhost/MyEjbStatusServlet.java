@@ -40,8 +40,8 @@ public class MyEjbStatusServlet extends HttpServlet {
     private DataSource dataSource;
     @EJB
     private MyEjbTimer myEjbTimer;
-    @EJB
-    private MyEjbSingleton myEjbSingleton;
+    //@EJB
+    //private MyEjbSingleton myEjbSingleton;
     @EJB
     private MyEjbAsync myEjbAsync;
 
@@ -61,7 +61,7 @@ public class MyEjbStatusServlet extends HttpServlet {
         writer.println();
         writer.println("## EJB ##");
         writer.println();
-        writer.println("SINGLETON:\t" + myEjbSingleton.getClass().getSimpleName() + "#incrementAndGetCounter: " + myEjbSingleton.incrementAndGetCounter());
+        //writer.println("SINGLETON:\t" + myEjbSingleton.getClass().getSimpleName() + "#incrementAndGetCounter: " + myEjbSingleton.incrementAndGetCounter());
         writer.println("TIMER:\t" + myEjbTimer.getClass().getSimpleName() + "#tickCount: " + myEjbTimer.getTickCount());
         Future<String> futureAsyncTaskResult = myEjbAsync.executeAsyncTask();
         writer.println("ASYNC:\t" + myEjbAsync.getClass().getSimpleName() + "#executeAsyncTask: " + futureAsyncTaskResult + " ...");
