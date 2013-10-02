@@ -6,9 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import dto.Buyer;
 import dto.Course;
 
 public class Access {
@@ -87,6 +89,65 @@ public class Access {
 	        }
 	            
 	    }
+	 
+	 public void addProduct(String user, String product, Connection con) throws SQLException {
+		 createSellingTableIfNotExist(con);
+		 executeStatement("insert into selling values('"+user+"','"+product+"')", con);
+	 }
+	 
+	public List<Buyer> getBuyers(String user, Connection con) throws SQLException {
+		createSellingTableIfNotExist(con);
+		createBuyersTableIfNotExist(con);
+		ArrayList<Buyer> buyerList = new ArrayList<Buyer>();
+		PreparedStatement stmt = con.prepareStatement("SELECT * FROM buyers WHERE product in (select product from sellers where user='"+user+"')");
+		ResultSet rs = stmt.executeQuery();
+		try {
+			while (rs.next()) {
+				Buyer obj = new Buyer();
+				obj.setUser(rs.getString("user"));
+				obj.setProduct(rs.getString("product"));
+				obj.setQuantity(rs.getInt("quantity"));
+				buyerList.add(obj);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return buyerList;
+	}
+	 
+	 private void createBuyersTableIfNotExist(Connection cnn) {
+			if (tableExists("buyers", cnn)) {
+				logger.info("table buying already exists");
+				return;
+			}
+			logger.info("create table buyers");
+			String sql = "CREATE TABLE IF NOT EXISTS `buyers`(\n"
+					+ "  `user` varchar(50) NOT NULL, \n"
+					+ "  `product` varchar(50) NOT NULL, \n"
+					+ "  `quantity` int NOT NULL\n"
+					+ ")                                            \n";
+			executeStatement(sql, cnn);
+			logger.info("Create data");
+			executeStatement("insert into buyers values ('Barney','Beer', 1)", cnn);
+	}
+
+
+
+	private void createSellingTableIfNotExist(Connection cnn) {
+		if (tableExists("selling", cnn)) {
+			logger.info("table selling already exists");
+			return;
+		}
+		logger.info("create table selling");
+		String sql = "CREATE TABLE IF NOT EXISTS `selling`(\n"
+				+ "  `user` varchar(50) NOT NULL, \n"
+				+ "  `product` varchar(50) NOT NULL\n"
+				+ ")                                            \n";
+		executeStatement(sql, cnn);
+		logger.info("Create data");
+		executeStatement("insert into selling values ('Fred','Beer')", cnn);
+	}
 	 
 	 private boolean tableExists(String tableName, Connection cnn) {
 	        Statement stmt = null;
