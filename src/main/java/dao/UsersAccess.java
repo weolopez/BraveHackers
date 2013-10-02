@@ -70,7 +70,7 @@ public int addUser(User user, Connection con) throws SQLException {
 		}
 		
 		return id;
-	}
+	} 
 	
 	
 	 private void createTablesIfNotExist(Connection cnn) {
