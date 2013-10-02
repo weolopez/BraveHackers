@@ -79,8 +79,8 @@ public class Access {
 		
 		PreparedStatement stmt = con.prepareStatement(Insert_Line);
 		
-		stmt.setInt(1, line.getLat());
-		stmt.setInt(2, line.getLat());
+		stmt.setDouble(1, line.getLat());
+		stmt.setInt(2, line.getLng());
 		stmt.setString(3, line.getType());
 		stmt.setInt(4, line.getVote());
 		stmt.setInt(5, line.getCount());
