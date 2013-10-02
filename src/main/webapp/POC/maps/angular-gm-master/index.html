@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html ng-app="myModule">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="windows-1252">
+        <meta name="viewport" content="width=device-width">
+
+        <script src="//maps.googleapis.com/maps/api/js?sensor=false"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+        <script src="//angulargm.herokuapp.com/angular-gm-0.3.0.min.js"></script>
+    </head>
+    <body>
+        <script>
+            var app = angular.module('myModule', ['AngularGM']);
+            app.
+                    controller('MyCtrl1', function($scope) {
+                        var x = document.getElementById("demo");
+
+                        $scope.lat = 46;
+                        $scope.lng = -122;
+                        
+                        function showPosition(position)
+                        {
+                            $scope.lat = position.coords.latitude;
+                            $scope.lng = position.coords.longitude;
+                            $scope.$apply();
+                        };
+
+                      
+
+                        if (navigator.geolocation)
+                        {
+                            navigator.geolocation.getCurrentPosition(showPosition);
+                        }
+                        else {
+                            x.innerHTML = "Geolocation is not supported by this browser.";
+                        }
+
+
+                        $scope.houses = [{
+                                name: 'myHouse',
+                                lat: 46,
+                                lng: -122
+                            }];
+                        $scope.options = {
+                            map: {
+                                center: new google.maps.LatLng($scope.lat, $scope.lng),
+                                zoom: 3,
+                                mapTypeId: google.maps.MapTypeId.ROADMAP
+                            },
+                            marker: {
+                                clickable: false,
+                                draggable: true
+                            }
+                        };
+                        $scope.setHouseLocation = function(house, marker) {
+                            var position = marker.getPosition();
+                            house.lat = position.lat();
+                            house.lng = position.lng();
+                        };
+
+                    })
+
+        </script>
+        <div>TODO write content</div>
+        <p id="demo">current cords...</p>
+
+
+        <h3 id="drag-marker">Drag Marker</h3>
+        <div class="row-fluid margin-bottom60" ng-controller="MyCtrl1">
+            <div class="span6">
+                <gm-map gm-map-id="'myMap'" gm-center="center" gm-zoom="zoom" gm-map-options="options.map" class="map">
+
+                </gm-map>
+            </div>
+            <div class="span6">
+                <p>
+                    Drag the marker to a location.
+                </p>
+                <p>
+                    <label>Current location:</label>
+                    {{houses[0].lat| number:2}}, {{houses[0].lng| number:2}}
+                </p>
+                <p>
+                    <label>map location:</label>
+                    {{lat| number:2}}, {{lng| number:2}}
+                    {{lat}}, {{lng}}
+                </p>
+            </div>
+                <gm-map gm-map-id="'dragMarkerMap'" gm-center="center" gm-zoom="zoom" gm-bounds="bounds" gm-map-type-id="mapTypeId" style="width:500px;height:500px;">
+                            <gm-markers gm-objects="houses"
+                                gm-get-lat-lng="{ lat: object.lat, lng: object.lng}"
+                                gm-get-marker-options="options.marker"
+                        gm-on-dragend="setHouseLocation(object, marker)">
+                                    
+                    </gm-markers>
+    </gm-map> 
+        </div>
+
+    </body>
+</html>
