@@ -6,11 +6,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import dto.Buyer;
 import dto.Course;
 import dto.Line;
+import dto.Product;
+import dto.Seller;
 
 
 public class Access {
@@ -171,6 +175,96 @@ public class Access {
 	            
 	    }
 	 
+	 public void addProduct(int userId, String product, Connection con) throws SQLException {
+		 createSellingTableIfNotExist(con);
+		 executeStatement("insert into sellers values('"+userId+"','"+product+"')", con);
+	 }
+	 
+	public List<Buyer> getBuyers(int userId, Connection con) throws SQLException {
+		createSellingTableIfNotExist(con);
+		createBuyersTableIfNotExist(con);
+		ArrayList<Buyer> buyerList = new ArrayList<Buyer>();
+		PreparedStatement stmt = con.prepareStatement("SELECT * FROM buyers WHERE product in (select product from sellers where userId='"+userId+"')");
+		ResultSet rs = stmt.executeQuery();
+		Buyer currBuyer = null;
+		try {
+			while (rs.next()) {
+				if (currBuyer==null || !currBuyer.getUser().equals(rs.getString("user"))) {
+					currBuyer = new Buyer();
+					currBuyer.setUser(new UsersAccess().getUser(rs.getInt("userId"),con));
+					buyerList.add(currBuyer);
+				}
+				Product product = new Product();
+				product.setName(rs.getString("product"));
+				product.setQuantity(rs.getInt("quantity"));
+				currBuyer.getProducts().add(product);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return buyerList;
+	}
+	 
+	 private void createBuyersTableIfNotExist(Connection cnn) {
+			if (tableExists("buyers", cnn)) {
+				logger.info("table buyers already exists");
+				return;
+			}
+			logger.info("create table buyers");
+			String sql = "CREATE TABLE IF NOT EXISTS `buyers`(\n"
+					+ "  `userid` int NOT NULL, \n"
+					+ "  `product` varchar(50) NOT NULL, \n"
+					+ "  `quantity` int NOT NULL, \n"
+                    + "  PRIMARY KEY (`userId`,`product`)\n"
+					+ ")";
+			executeStatement(sql, cnn);
+			logger.info("Create data");
+			executeStatement("insert into buyers values ('2','Beer', 1)", cnn);
+	}
+
+	 public List<Product> getSellerProducts(Connection con) throws SQLException {
+		 createSellingTableIfNotExist(con);
+		 
+			ArrayList<Product> productList = new ArrayList<Product>();
+			PreparedStatement stmt = con.prepareStatement("SELECT * FROM sellers order by product");
+			ResultSet rs = stmt.executeQuery();
+			Product currProduct = null;
+			try {
+				while (rs.next()) {
+					if (currProduct==null || !currProduct.getName().equals(rs.getString("product"))) {
+						currProduct = new Product();
+						currProduct.setName(rs.getString("product"));
+						currProduct.setQuantity(-1);
+						productList.add(currProduct);
+					}
+					Seller seller = new Seller();
+					seller.setUser(new UsersAccess().getUser(rs.getInt("userId"), con));
+					currProduct.getSellers().add(seller);
+					}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			return productList;
+	 }
+
+	private void createSellingTableIfNotExist(Connection cnn) {
+		if (tableExists("sellers", cnn)) {
+			logger.info("table selling already exists");
+			return;
+		}
+		logger.info("create table sellers");
+		String sql = "CREATE TABLE IF NOT EXISTS `sellers`(\n"
+				+ "  `userId` int NOT NULL, \n"
+				+ "  `product` varchar(50) NOT NULL, \n"
+                + "  PRIMARY KEY (`userId`,`product`) \n"
+				+ ")";
+		executeStatement(sql, cnn);
+		logger.info("Create data");
+		executeStatement("insert into sellers values (1,'Beer')", cnn);
+	}
+	 
 	 private boolean tableExists(String tableName, Connection cnn) {
 	        Statement stmt = null;
 	        try {
@@ -185,12 +279,13 @@ public class Access {
 	    }
 	 
 	 
-	  private void executeStatement(String sql, Connection cnn) {
+	  public void executeStatement(String sql, Connection cnn) {
 	        Statement stmt = null;
 	        try {
 	            stmt = cnn.createStatement();
 	            stmt.execute(sql);
 	        } catch (SQLException e) {
+	        	logger.warning(e.toString());
 	            throw new RuntimeException("Exception executing '" + sql + "'", e);
 	        } finally {
 	            closeQuietly(stmt);
