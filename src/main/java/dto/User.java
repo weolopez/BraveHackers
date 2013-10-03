@@ -128,7 +128,7 @@ public class User {
 				", password=" + password + 
 				", username= " + username +
 				", authmethod= " + authmethod  +
-				", lat= " + lat +
+				", lat= " + String.valueOf(lat) +
 				", lng= " + lng  +
 					", datecreated= " + datecreated +
 					", lineid= " + lineid 
