@@ -45,28 +45,45 @@ public class Access {
 	}
 
 	
-	public String addLine(Connection con, Line line) throws SQLException {
-		String lineId = "0";
+	public int addLine(Connection con, Line line) throws SQLException {
+		int lineId = 0;
 		
-		System.out.print("---------" +line.getLat());
-		System.out.print("---------" +line.getLng());
-		System.out.print("---------" +line.getType());
-		
-		
+				
 		createTables_Line_IfNotExist(con);
-		String Insert_Line = "INSERT INTO line ( lat, lng,  type, vote, count  )  VALUES (?,?,?,?,?)";
+		String Insert_Line = "INSERT INTO line ( lat, lng,  type, vote, count, id  )  VALUES (?,?,?,?,?,?)";
 		
-		
-		PreparedStatement stmt = con.prepareStatement(Insert_Line);
+		lineId = getLineMaxId(con);
+		PreparedStatement stmt = con.prepareStatement(Insert_Line); 
 		
 		stmt.setDouble(1, line.getLat());
-		stmt.setInt(2, line.getLng());
+		stmt.setDouble(2, line.getLng());
 		stmt.setString(3, line.getType());
 		stmt.setInt(4, line.getVote());
 		stmt.setInt(5, line.getCount());
-		 
+		stmt.setInt(6, lineId);
+		
 		
 		stmt.execute();
+		
+		return lineId;
+	}
+	
+	public int getLineMaxId(Connection con) throws SQLException {
+		int lineId = 0;
+		
+				
+		createTables_Line_IfNotExist(con);
+		
+		PreparedStatement stmt = con.prepareStatement("select max(id)+1 id from line");
+		ResultSet rs = stmt.executeQuery();
+		
+		try {
+			while (rs.next()) {				 
+				lineId = rs.getInt("id");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}  
 		return lineId;
 	}
 	
@@ -92,7 +109,7 @@ public class Access {
 	     } else 
 	     {
 	         logger.info("create table courses");
-	         String sql = "CREATE TABLE IF NOT EXISTS crowds ( id int(11), not null AUTO_INCREMENT, lat DECIMAL(10, 8), lng DECIMAL(10, 8), name varchar(100), PRIMARY KEY (`id`) ' ) ";
+	         String sql = "CREATE TABLE IF NOT EXISTS crowds ( id int(11), not null AUTO_INCREMENT, lat DECIMAL(10, 8), lng DECIMAL(10, 8), name varchar(100), datecreated timestamp default now(), PRIMARY KEY (`id`) ' ) ";
 	                 
 	         executeStatement(sql, cnn); 
 	         logger.info("Create data");  

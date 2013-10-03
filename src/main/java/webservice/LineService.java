@@ -1,7 +1,8 @@
 package webservice;
 
 import java.util.ArrayList;
-
+import java.lang.Integer;
+  
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -11,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 
 import model.AccessManager;
 import dto.Line;
+import helper.CrowdHelper;
 
 @Path("/lineService")
 public class LineService {
@@ -30,36 +32,44 @@ public class LineService {
 	}
 	
 	
-	@PUT		
-	@Produces(MediaType.TEXT_PLAIN)
+	@PUT	
 	@Path("/addline")
-	public String addline(@FormParam("lat") int lat, 
-			@FormParam("lng") int lng,
+	@Produces(MediaType.TEXT_PLAIN)	
+	public String addline(@FormParam("lat") String inlat, 
+			@FormParam("lng") String inlng,
 			@FormParam("type") String type	,	
-			@FormParam("count") int count,
-			@FormParam("vote") int vote
+			@FormParam("count") String strcount,
+			@FormParam("vote") String strvote
 			) {
-		String lineId = "0";
+		int lineId = 0;
+		
+		try
+		{
+		
+		CrowdHelper helper = new CrowdHelper();
+		double lat = helper.getDouble("lat",inlat,false,0);
+		double lng = helper.getDouble("lat",inlng,false,0);
+		
+		int count = helper.getInt("count",strcount,false,0);
+		int vote = helper.getInt("vote",strvote,false,0);
 		
 		System.out.print("---------" +lng);
 		System.out.print("---------" +lat);
 		System.out.print("---------" +type);
-		
 		 
 		 Line line = new Line();
 		 line.setLat(lat);
 		 line.setLng(lng);
 		 line.setType(type);
 		 line.setCount(count);
-		 line.setVote(vote);
-		 	 
+		 line.setVote(vote); 
 		 
-		try {
 			lineId = new AccessManager().addLine(line);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return lineId;
+						
+		return Integer.toString(lineId);
 		 
 	}
 	
