@@ -1,25 +1,55 @@
-<!doctype html>
-<html lang="en" ng-app="braveHackers">
+<!DOCTYPE html>
+<html >
     <head>
-        <meta charset="utf-8">
-        <title>My AngularJS App</title>
-        <link rel="stylesheet" href="css/app.css"/>
-        <!-- Latest compiled and minified CSS -->
+        <meta charset="UTF-8">
+        <title>I Love Crowds</title>
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-
-        <!-- Optional theme -->
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
         <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet" />
-
+        <link rel="stylesheet" href="css/homeApp.css">
     </head>
     <body>
-        <div id="app">
-            <div ng-view ng-animate="{enter: 'animate-enter', leave: 'animate-leave'}">
-                <div>Angular seed app: v<span app-version></span></div>
-            </div>
+        <div id="app" ng-controller="HomeCtrl">
+            <section id="splash">
+                <nav id="splash-screen">
+                    <p><a href="#login">I</a></p>
+                    <p><a href="#tools" title="Love" class="heart"><i class="icon-heart"></i></a></p>
+                    <p><a href="#crowds">Crowds</a></p>
+                </nav>
+            </section>
+
+            <section id="login">
+                <h1>Login</h1>
+                <form action="">
+                    <p><label for="username">Username: </label> <input type="text" id="username"></p>
+                    <p><label for="password">Password: </label> <input type="password" id="password"></p>
+                    <p><input type="submit" value="Login"></p>
+                </form>
+            </section>
+
+            <section id="tools">
+                <h1>Tools to Make Crowds Fun</h1>
+                <nav>
+                    <ul class="clearfix">
+                        <li><a href="Lines.html">I Love Lines</a></li>
+                        <li><a href="Sellers.html">Sellers</a></li>
+                        <li><a href="Buyers.html">Buyers</a></li>
+                        <li><a href="Lost.html">Lost</a></li>
+                        <li><a href="Found.html">Found</a></li>
+                        <li><a href="Graffitti.html">Graffitti</a></li>
+                    </ul>
+                </nav>
+            </section>
+
+            <section id="crowds">
+                <h1>Crowds Near You</h1>
+                <ul>
+                    <li><a href="maps.html">Crowd #1</a></li>
+                    <li><a href="maps.html">Crowd #2</a></li>
+                    <li><a href="maps.html">Crowd #3</a></li>
+                </ul>
+            </section>
+
         </div>
-
-
 
         <script src="lib/jquery/jquery.js"></script>
         <script src="//maps.googleapis.com/maps/api/js?sensor=false"></script>
@@ -39,5 +69,24 @@
         <script src="js/braveHackersAppControllers.js"></script>
         <script src="js/braveHackersAppFilters.js"></script>
         <script src="js/braveHackersAppDirectives.js"></script>
+        <script>
+            $(document).ready(function() {
+                var dWidth = $(window).outerWidth(true),
+                        dHeight = $(window).outerHeight(true);
+
+                //alert(dWidth + " x " + dHeight);
+
+                $('#splash-screen').find('a').each(function(i) {
+                    $(this).delay(i * 400).fadeIn();
+                });
+
+
+                $('#popup').click(function(e) {
+                    e.preventDefault();
+                    $('#app').append('<div class="pop">New Pop Up Div</div>');
+
+                });
+            });
+        </script>
     </body>
 </html>
