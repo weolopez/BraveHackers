@@ -117,19 +117,19 @@ public int addUser(User user, Connection con) throws SQLException {
 	            try {
 	                stmt = cnn.prepareStatement("insert into `users` (`id`, `firstname`, `lastname`, `password`, `username`, `authmethod`, `lat`, `lng`)  VALUES (?,?,?,?,?,?,?,?)");
 	                stmt.setInt(1, 1);
-	                stmt.setString(2, "Kelley");
-	                stmt.setString(3, "Mantione");
-	                stmt.setString(4, "kelleypass");
-	                stmt.setString(5, "kelleymantione");
+	                stmt.setString(2, "Walter");
+	                stmt.setString(3, "White");
+	                stmt.setString(4, "walterpass");
+	                stmt.setString(5, "walterwhite");
 	                stmt.setString(6, "twitter");
 	                stmt.setDouble(7, 40.71727401);
 	                stmt.setDouble(8, -74.00898606);
 	                stmt.execute();
 	                stmt.setInt(1, 2);
-	                stmt.setString(2, "Molly");
-	                stmt.setString(3, "Lopez");
-	                stmt.setString(4, "mollypass");
-	                stmt.setString(5, "mollylopez");
+	                stmt.setString(2, "Nick");
+	                stmt.setString(3, "Brody");
+	                stmt.setString(4, "nickpass");
+	                stmt.setString(5, "nickbrody");
 	                stmt.setString(6, "twitter");
 	                stmt.setDouble(7, 40.71727401);
 	                stmt.setDouble(8, -74.00898606);
