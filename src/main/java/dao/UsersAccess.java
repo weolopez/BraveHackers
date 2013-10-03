@@ -89,6 +89,20 @@ public int addUser(User user, Connection con) throws SQLException {
 		return id;
 	} 
 	
+    public void updateLocation(double lat, double lng, int id, Connection con) {
+	
+    	createTablesIfNotExist(con);
+    	try {
+    		PreparedStatement stmt = con.prepareStatement("update users set lat=?,lng=? where id=?");
+    		stmt.setDouble(1, lat);
+    		stmt.setDouble(2, lng);
+    		stmt.setInt(3, id);
+    		stmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    } 
+
 	
 	 private void createTablesIfNotExist(Connection cnn) {
 		 
@@ -110,7 +124,7 @@ public int addUser(User user, Connection con) throws SQLException {
 	                            "  `authmethod` varchar(50) NOT NULL,         \n" +
 	                            "  `lat` DECIMAL(10, 8) ,         \n" +
 	                            "  `lng` DECIMAL(11, 8) ,         \n" +
-	                            "  `datecreated` timestamp default now() ,         \n" +	
+	                            "  `datecreated` timestamp ,         \n" +	
 	                            "  `lineid` int(11) , \n" +
 	                            "  PRIMARY KEY (`id`),                    \n" +
 	                            "  FOREIGN KEY (`lineid`) REFERENCES line(id)                     \n" +
