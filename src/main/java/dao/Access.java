@@ -97,7 +97,7 @@ public class Access {
 	     } else 
 	     {
 	         logger.info("create table courses");
-	         String sql = "CREATE TABLE IF NOT EXISTS line ( id int(11) not null AUTO_INCREMENT, lat DECIMAL(10, 8), lng DECIMAL(10, 8), type varchar(100),  vote int(11), count int(11), PRIMARY KEY (`id`)    ) ";
+	         String sql = "CREATE TABLE IF NOT EXISTS line ( id int(11) not null AUTO_INCREMENT, lat DECIMAL(10, 8), lng DECIMAL(10, 8), type varchar(100),  vote int(11), count int(11), datecreated timestamp default now(), PRIMARY KEY (`id`)    ) ";
 	                 
 	         executeStatement(sql, cnn); 
 	         logger.info("Create data");  
@@ -112,7 +112,7 @@ public class Access {
 	     } else 
 	     {
 	         logger.info("create table courses");
-	         String sql = "CREATE TABLE IF NOT EXISTS 'crowds' ( id int(11), not null AUTO_INCREMENT, lat DECIMAL(10, 8), lng DECIMAL(10, 8), name varchar(100), PRIMARY KEY (`id`) ' ) ";
+	         String sql = "CREATE TABLE IF NOT EXISTS crowds ( id int(11), not null AUTO_INCREMENT, lat DECIMAL(10, 8), lng DECIMAL(10, 8), name varchar(100), PRIMARY KEY (`id`) ' ) ";
 	                 
 	         executeStatement(sql, cnn); 
 	         logger.info("Create data");  
