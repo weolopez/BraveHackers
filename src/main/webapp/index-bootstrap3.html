@@ -12,7 +12,7 @@
         <!-- Bootstrap core CSS -->
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
         <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet" />
-    
+
         <!-- Optional theme -->
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
 
@@ -24,6 +24,12 @@
 
         <!-- Custom styles for this template -->
         <link href="lib/bootstrap/carousel.css" rel="stylesheet">
+        <style>
+            #draggable {
+                position:absolute;
+                font-size: xx-large;
+            }
+        </style>
     </head>
     <!-- NAVBAR
     ================================================== -->
@@ -118,7 +124,7 @@
 
 
         <div class="container marketing">
-            <div ng-view ng-animate="{enter: 'animate-enter', leave: 'animate-leave'}">
+            <div ng-view >
                 <div>Angular seed app: v<span app-version></span></div>
             </div>
 
@@ -138,13 +144,16 @@
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="//maps.googleapis.com/maps/api/js?sensor=false"></script>
-        <!--script src="http://code.jquery.com/jquery-2.0.3.js"></script>
-        <script src="lib/bootstrap/bootstrap3.0.min.js"></script  too much recurrsion-->
+        <script src="http://code.jquery.com/jquery-2.0.3.js"></script>        
+        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
         <script src="lib/bootstrap/holder.js"></script>
-        <script src="lib/angular/angular1.2.js"></script>
-        <script src="lib/angular/angular-animate1.2.js"></script>
+        <script src="lib/angular/angular.js"></script>
+        <script src="lib/angular/angular-dragdrop.js"></script>
+        <!--script src="lib/angular/angular-animate1.2.js"></script>
         <script src="lib/angular/angular-route1.2.js"></script>        
-        <script src="/BraveHackersNew/lib/angular/angular-touch1.2.js"></script>
+        <script src="lib/angular/angular-touch1.2.js"></script>    
+        <script src="lib/angular/angular-mobile.js"></script> 
+        <script src="lib/angular/angular-ngClick.js"></script-->
         <script src="//angulargm.herokuapp.com/angular-gm-0.3.0.min.js"></script>
         <!--script src="lib/mongolabResourceHttp/mongolabResourceHttp.js"></scrip>
         <script src="lib/ng-grid/ng-grid-2.0.7.debug.js"></script>

@@ -4,14 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import dto.User;
 
-public class UsersAccess {
+public class UsersAccess extends Access{
 	
 	private final Logger logger = Logger.getLogger(getClass().getName());
 	
@@ -28,7 +27,7 @@ public class UsersAccess {
 	
 	public ArrayList<User> getUsers(int id, Connection con) throws SQLException {
 		
-		createTablesIfNotExist(con);
+		createUserTablesIfNotExist(con);
 		ArrayList<User> userList = new ArrayList<User>();
 		
 		String sql = "SELECT * FROM users";
@@ -60,7 +59,7 @@ public class UsersAccess {
 	
 public int addUser(User user, Connection con) throws SQLException {
 		
-		createTablesIfNotExist(con);
+		createUserTablesIfNotExist(con);
 		PreparedStatement stmt = con.prepareStatement("insert into `users` ( `firstname`, `lastname`, `password`, `username`, `authmethod`, `lat`, `lng`)  VALUES (?,?,?,?,?,?,?)");
   
         stmt.setString(1, user.getFirstname());
@@ -91,7 +90,7 @@ public int addUser(User user, Connection con) throws SQLException {
 	
     public void updateLocation(double lat, double lng, int id, Connection con) {
 	
-    	createTablesIfNotExist(con);
+    	createUserTablesIfNotExist(con);
     	try {
     		PreparedStatement stmt = con.prepareStatement("update users set lat=?,lng=? where id=?");
     		stmt.setDouble(1, lat);
@@ -102,12 +101,24 @@ public int addUser(User user, Connection con) throws SQLException {
 			e.printStackTrace();
 		}
     } 
+    
+    public void updateLine(int lineid, int id, Connection con) {
+    	
+    	createUserTablesIfNotExist(con);
+    	try {
+    		PreparedStatement stmt = con.prepareStatement("update users set lineid=? where id=?");
+    		stmt.setInt(1, lineid);
+    		stmt.setInt(2, id);
+    		stmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    } 
 
 	
-	 private void createTablesIfNotExist(Connection cnn) {
-		 
-	     Access access = new Access();	     
-		 access.createTables_Line_IfNotExist(cnn);
+	 private void createUserTablesIfNotExist(Connection cnn) {
+		 	     
+		 createTables_Line_IfNotExist(cnn);
 	           
 	       if (tableExists("users", cnn)) {
 	            logger.info("table users already exists");
@@ -170,53 +181,5 @@ public int addUser(User user, Connection con) throws SQLException {
 	            
 	    }
 	 
-	 private boolean tableExists(String tableName, Connection cnn) {
-	        Statement stmt = null;
-	        try {
-	            stmt = cnn.createStatement();
-	            stmt.execute("select * from " + tableName + " where 0=1");
-	            return true;
-	        } catch (SQLException e) {
-	            return false;
-	        } finally {
-	            closeQuietly(stmt);
-	        }
-	    }
 	 
-	 
-	  private void executeStatement(String sql, Connection cnn) {
-	        Statement stmt = null;
-	        try {
-	            stmt = cnn.createStatement();
-	            stmt.execute(sql);
-	        } catch (SQLException e) {
-	            throw new RuntimeException("Exception executing '" + sql + "'", e);
-	        } finally {
-	            closeQuietly(stmt);
-	        }
-	    }
-	  
-	  
-	  private void closeQuietly(Statement stmt) {
-	        if (stmt == null) {
-	            return;
-	        }
-	        try {
-	            stmt.close();
-	        } catch (Exception e) {
-	            logger.log(Level.WARNING, "Ignore exception closing quietly statement", e);
-	        }
-	    }
-
-	    private void closeQuietly(Connection cnn) {
-	        if (cnn == null) {
-	            return;
-	        }
-	        try {
-	            cnn.close();
-	        } catch (Exception e) {
-	            logger.log(Level.WARNING, "Ignore exception closing quietly connection", e);
-	        }
-	    }
-
 }
