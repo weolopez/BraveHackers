@@ -189,7 +189,7 @@ public class Access {
 		Buyer currBuyer = null;
 		try {
 			while (rs.next()) {
-				if (currBuyer==null || !currBuyer.getUser().equals(rs.getString("user"))) {
+				if (currBuyer==null || currBuyer.getUser().getId()!=rs.getInt("userId")) {
 					currBuyer = new Buyer();
 					currBuyer.setUser(new UsersAccess().getUser(rs.getInt("userId"),con));
 					buyerList.add(currBuyer);
