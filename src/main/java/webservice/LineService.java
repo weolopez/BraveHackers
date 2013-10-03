@@ -45,9 +45,11 @@ public class LineService {
 		
 		try
 		{
-			System.out.print("---------" +inlat);
-			System.out.print("---------" +inlng);
-			System.out.print("---------" +type);
+			System.out.print("lat---------" +inlat);
+			System.out.print("lng---------" +inlng);
+			System.out.print("type---------" +type);
+			System.out.print("count---------" +strcount);
+			System.out.print("vote---------" +strvote);
 		
 		CrowdHelper helper = new CrowdHelper();
 		double lat = helper.getDouble("lat",inlat,false,0);
