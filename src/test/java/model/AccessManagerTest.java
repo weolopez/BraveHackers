@@ -49,4 +49,27 @@ public class AccessManagerTest {
 			System.out.println(product);
 		Assert.assertTrue(true);
 	}
+	
+	@Test
+	public void testIWant() throws Exception {
+		new AccessManager().iWant(1, "Burger", 1);
+		Assert.assertTrue(true);
+		try {
+			new AccessManager().iWant(1, "Burger", 1);
+			Assert.assertTrue(false);
+		} catch (Exception e) {
+			Assert.assertTrue(true);
+		}
+		new AccessManager().iWant(1, "Fries", 1);
+		Assert.assertTrue(true);
+	}
+	
+	public void testIGot() throws Exception {
+		new AccessManager().iWant(1, "Milkshake", 1);
+		Assert.assertTrue(true);
+		new AccessManager().iGot(1, "Milkshake");
+		Assert.assertTrue(true);
+		new AccessManager().iWant(1, "Milkshake", 1);
+		Assert.assertTrue(true);
+	}
 }
