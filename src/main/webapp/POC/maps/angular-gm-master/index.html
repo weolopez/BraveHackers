@@ -9,15 +9,17 @@ and open the template in the editor.
         <title>TODO supply a title</title>
         <meta charset="windows-1252">
         <meta name="viewport" content="width=device-width">
-
+        <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet" />
+    
         <script src="//maps.googleapis.com/maps/api/js?sensor=false"></script>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+        <script src="/BraveHackersNew/lib/angular/angular-1.2.js"></script>
+        <script src="/BraveHackersNew/lib/angular/angular-touch1.2.js"></script>
         <script src="//angulargm.herokuapp.com/angular-gm-0.3.0.min.js"></script>
     </head>
     <body>
         <script>
-            var app = angular.module('myModule', ['AngularGM']);
+            var app = angular.module('myModule', ['AngularGM','ngTouch']);
             app.
                     controller('MyCtrl1', function($scope) {
                         var x = document.getElementById("demo");
@@ -29,6 +31,7 @@ and open the template in the editor.
                         {
                             $scope.lat = position.coords.latitude;
                             $scope.lng = position.coords.longitude;
+                            $scope.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                             $scope.$apply();
                         };
 
@@ -51,7 +54,7 @@ and open the template in the editor.
                         $scope.options = {
                             map: {
                                 center: new google.maps.LatLng($scope.lat, $scope.lng),
-                                zoom: 3,
+                                zoom: 21,
                                 mapTypeId: google.maps.MapTypeId.ROADMAP
                             },
                             marker: {
@@ -64,7 +67,9 @@ and open the template in the editor.
                             house.lat = position.lat();
                             house.lng = position.lng();
                         };
-
+                        $scope.clickDrag = function(e) {
+                            var a = e;
+                        }
                     })
 
         </script>
@@ -102,6 +107,12 @@ and open the template in the editor.
                     </gm-markers>
     </gm-map> 
         </div>
-
+        <nav>
+            <ul>
+                <li>
+                    <a><i id="draggable" class="icon-camera-retro" ng-click="clickDrag"></i></a>
+                </li>
+            </ul>
+        </nav>
     </body>
 </html>
