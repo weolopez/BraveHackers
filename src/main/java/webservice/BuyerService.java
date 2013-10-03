@@ -48,7 +48,7 @@ public class BuyerService {
 		return ack;
 	}
 
-	@DELETE
+	@PUT
 	@Path("/iGot")
 	@Produces("application/json")
 	public Acknowledgement iGot(@FormParam("userId" ) String userId, @FormParam("product" ) String product) {

@@ -256,7 +256,7 @@ public class Access {
 	 
 	 public void iGot(int userId, String product, Connection con) {
 		 createBuyersTableIfNotExist(con);
-		 executeStatement("delete from buyers where userId="+userId+" and product='"+product+"')", con);
+		 executeStatement("delete from buyers where userId="+userId+" and product='"+product+"'", con);
 	 }
 	 
 	private void createSellingTableIfNotExist(Connection cnn) {
