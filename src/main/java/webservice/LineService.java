@@ -13,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 
 import model.AccessManager;
 import model.UserManager;
+import dto.Acknowledgement;
 import dto.Line;
 import dto.User;
 
@@ -42,8 +43,6 @@ public class LineService {
 			@FormParam("lat" ) String lat ,
 			@FormParam("lng" ) String lng 
 		) {
-		System.out.print("---------" +firstname);
-		System.out.print("---------" +lastname);
 		
 		User user = new User();
 		user.setFirstname(firstname);
@@ -82,6 +81,41 @@ public class LineService {
 		}
 		return lineList;
 	}
+	
+	@PUT
+	@Produces("application/json")
+	@Path("/updatelocation")
+	public Acknowledgement updateLocation( @FormParam("lat" ) String inlat , @FormParam("lng" ) String inlng,
+			@FormParam("id" ) String id 
+		) {
+		Acknowledgement ack = new Acknowledgement();
+		ack.setSuccess(false);
+		double lat = 0;
+		double lng = 0;
+		int userid = -1;
+				
+		if (inlat!=null && inlat.trim().length() !=0)
+		{
+			lat = Double.parseDouble(inlat);
+		}
+		if (inlng!=null && inlng.trim().length() !=0)
+		{
+			lng = Double.parseDouble(inlng);
+		}
+		if (id!=null && id.trim().length() !=0)
+		{
+			userid = Integer.parseInt(id);
+		}
+		try {
+			new UserManager().updateLocation(lat,lng,userid);
+			ack.setSuccess(true);
+		} catch (Exception e) {
+			ack.setReason(e.getMessage());
+		}
+		return ack;
+		
+	}
+	
 	
 	@PUT		
 	@Produces(MediaType.TEXT_PLAIN)
