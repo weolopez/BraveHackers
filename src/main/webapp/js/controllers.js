@@ -16,6 +16,33 @@ angular.module('myApp.controllers', ['AngularGM', 'ngDragDrop']).
         })
         .controller('MyCtrl4', function() {
         })
+         .controller('signupCtrl', function($scope,$window,$location) {
+        	 
+        	 $scope.hello = ${pageContext.request.contextPath};
+        	 
+        	 $scope.submit=function(){
+						//$window.alert("You have submitted successfully");
+					 	//backent.put({username:$scope.hello});
+        		 
+        		 	$.ajax( {
+        		       //url:"${pageContext.request.contextPath}/services/jsonrest/prepop",
+        		 	   //url:"http://localhost:8080/BraveHackers/crowds/userService/addUser?firstName=ram&lastName=ram&password=23eadsas&lat=56.12121212&lng=12.121212&authMethod=czx&userName=zxczxzxc",   
+        		 	   
+        		 	   url:"http://localhost:8080/BraveHackers/crowds/userService/addUser",
+        		 	   contentType: 'application/x-www-form-urlencoded', 
+        		       type:"PUT",
+        		       async:true,
+        		       data: [{name: "userName", value: $scope.username},{name: "password", value: $scope.password},{name: "firstName", value: "test"}, {name: "lastName", value: "test"}, {name: "authMethod", value: "username"}, {name: "lat", value: "20.1515113"}, {name: "lng", value: "22.1515113"} ],
+        		       success:function ( result ) {
+        		    	   $scope.hello = result;
+        		       }
+        		    } );
+        		 
+        		 
+		                $location.url('/view2');
+			}
+        	 
+        })
         .controller('GeomapCtrl', function($scope, angulargmContainer) {
             $scope.map;
             $scope.pin = {

@@ -3,8 +3,11 @@ package webservice;
 import java.util.ArrayList;
 
 import javax.ws.rs.FormParam;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -37,8 +40,16 @@ public class UserService {
 			@FormParam("userName" ) String userName ,
 			@FormParam("authMethod" ) String authMethod ,
 			@FormParam("lat" ) String inlat ,
-			@FormParam("lng" ) String inlng 
+			@FormParam("lng" ) String inlng,
+			@PathParam("firstName" ) String pfirstName,
+			@QueryParam("firstName" ) String qfirstName
+			
 		) {
+		
+		System.out.println("firstName "+firstName);
+		System.out.println("pfirstName "+pfirstName);
+		System.out.println("qfirstName "+qfirstName);
+		
 		
 		int id = 0;
 		try

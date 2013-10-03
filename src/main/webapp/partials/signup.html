@@ -1,0 +1,37 @@
+ 
+<h1>{{hello}}</h1>
+<h1>{{username}}</h1>
+ 
+<div class="row-fluid margin-bottom60">
+    
+     
+    <div class="span6">
+       
+       <form name="myform" ng-submit="submit()">
+       
+      
+       
+		    <p><strong>Username:</strong>
+		   		<input type="text" ng-model="username" name="j_username"   required>
+		   		<span style="color:red;" ng-show="myform.username.$error.required">*required!</span>
+				<span style="color:red;" ng-show="myform.username.$error.email">*enter a valid username!</span><br></td></tr>
+		    <p>
+		
+		    <p><strong>Password: </strong>		    	
+		        <input type="password" ng-model="password" name="j_password"  required ng-minlength="5" ng-maxlength="9" placeholder="Enter Password">
+		        <span style="color:red;" ng-show="myform.password.$error.required">*required!</span>
+				<span style="color:red;" ng-show="myform.password.$error.minlength">*too short!</span>
+				<span style="color:red;" ng-show="myform.password.$error.maxlength">*max 9 character!</span><br> </td></tr>		
+		    <p>
+		
+		    <p>
+		        <input type="submit" value="Submit">		       
+		    </p>
+		
+		 </form>
+	   </div> 		
+    </div> 
+
+<br><br>
+
+</div>
