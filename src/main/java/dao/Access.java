@@ -249,6 +249,16 @@ public class Access {
 			return productList;
 	 }
 
+	 public void iWant(int userId, String product, int quantity, Connection con) {
+		 createBuyersTableIfNotExist(con);
+		 executeStatement("insert into buyers values('"+userId+"','"+product+"',"+quantity+")", con);
+	 }
+	 
+	 public void iGot(int userId, String product, Connection con) {
+		 createBuyersTableIfNotExist(con);
+		 executeStatement("delete from buyers where userId="+userId+" and product='"+product+"')", con);
+	 }
+	 
 	private void createSellingTableIfNotExist(Connection cnn) {
 		if (tableExists("sellers", cnn)) {
 			logger.info("table selling already exists");

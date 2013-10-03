@@ -49,6 +49,14 @@ public class AccessManager {
 		return new Access().getSellerProducts(getConnection());
 	}
 	
+	public void iWant(int userId, String product, int quantity) throws Exception {
+		new Access().iWant(userId, product, quantity, getConnection());
+	}
+	
+	public void iGot(int userId, String product) throws Exception {
+		new Access().iGot(userId, product, getConnection());
+	}
+	
 	private Connection getConnection() throws Exception {
 		Database db = new Database();
 		return db.getConnection();
