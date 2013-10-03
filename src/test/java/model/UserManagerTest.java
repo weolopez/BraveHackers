@@ -2,11 +2,14 @@ package model;
 
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.Assert;
 
+import dto.Line;
 import dto.User;
 
+@Ignore 
 public class UserManagerTest {
 
 	@Test
@@ -41,6 +44,33 @@ public class UserManagerTest {
 		List<User> users = um.getUsers();
 		for (User us : users)
 			System.out.println(us);
+		Assert.assertTrue(true);
+	}
+	
+	@Test
+	public void addLineToUser() throws Exception {
+		UserManager um = new UserManager();
+		AccessManager access = new AccessManager();
+		Line line = new Line();
+		line.setCount(5);
+		line.setType("food");
+		line.setVote(10);
+		line.setLat(24.2345);
+		line.setLng(34.5645645);
+		int lineId = access.addLine(line);
+	
+		
+		User user = new User();
+		user.setFirstname("New");
+		user.setLastname("Tester");
+		user.setUsername("joeyt");
+		user.setPassword("pass");
+		user.setAuthmethod("");
+		int userId = um.addUser(user);
+		um.updateLine(lineId, userId);
+		for (User us : um.getUsers())
+			System.out.println(us);
+		System.out.println("lineId: " + lineId);
 		Assert.assertTrue(true);
 	}
 

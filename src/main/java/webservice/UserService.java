@@ -15,9 +15,12 @@ import javax.ws.rs.core.MediaType;
 import model.UserManager;
 import dto.Acknowledgement;
 import dto.User;
+import helper.CrowdHelper;
 
 @Path("/userService")
 public class UserService {
+	
+	private CrowdHelper helper = new CrowdHelper();
 	@GET
 	@Path("/getUsers")
 	@Produces("application/json")
@@ -55,14 +58,14 @@ public class UserService {
 		try
 		{
 			User user = new User();
-			user.setFirstname(getValue("firstName", firstName));
-			user.setLastname(getValue("lastName", lastName));
-			user.setUsername(getValue("userName", userName));
-			user.setPassword(getValue("password", password));
-			user.setAuthmethod(getValue("authMethod", authMethod));
-			double lat = getDouble("lat",inlat,false,0);
+			user.setFirstname(helper.getValue("firstName", firstName));
+			user.setLastname(helper.getValue("lastName", lastName));
+			user.setUsername(helper.getValue("userName", userName));
+			user.setPassword(helper.getValue("password", password));
+			user.setAuthmethod(helper.getValue("authMethod", authMethod));
+			double lat = helper.getDouble("lat",inlat,false,0);
 			user.setLat(lat);
-			double lng = getDouble("lng",inlng,false,0);	
+			double lng = helper.getDouble("lng",inlng,false,0);	
 			user.setLng(lng);
 			id = new UserManager().addUser(user);
 		} catch (Exception e) {
@@ -84,9 +87,9 @@ public class UserService {
 		ack.setSuccess(false);		
 		try
 		{
-			double lat = getDouble("lat",inlat,false,0);
-			double lng = getDouble("lng",inlng,false,0);
-			int userIdInt = getInt("userId",userId,false,0);
+			double lat = helper.getDouble("lat",inlat,false,0);
+			double lng = helper.getDouble("lng",inlng,false,0);
+			int userIdInt = helper.getInt("userId",userId,false,0);
 			new UserManager().updateLocation(lat,lng,userIdInt);
 			ack.setSuccess(true);
 		} catch (Exception e) {
@@ -100,14 +103,14 @@ public class UserService {
 	@Produces("application/json")
 	@Path("/addLineToUser")
 	public Acknowledgement addLineToUser( @FormParam("lineId" ) String lineId , @FormParam("userId" ) String userId
-		) {
+		) { 
 		Acknowledgement ack = new Acknowledgement();
 		ack.setSuccess(false);
 		
 		try {
-			int lineIdInt = getInt("lineId",lineId,false,0);
-			int userIdInt = getInt("userId",userId,false,0);
-			//new UserManager().addLineToUser(ineIdInt, userIdInt);
+			int lineIdInt = helper.getInt("lineId",lineId,false,0);
+			int userIdInt = helper.getInt("userId",userId,false,0);
+			new UserManager().updateLine(lineIdInt, userIdInt);
 			ack.setSuccess(true);
 		} catch (Exception e) {
 			ack.setReason(e.getMessage());
@@ -117,41 +120,6 @@ public class UserService {
 	}
 	
 	
-	
-	private int getInt(String field, String value, boolean allowDefault, int defValue) throws Exception {
-		if (value==null || value.length()==0) {
-			if (allowDefault)
-				return defValue;
-			throw new Exception(field+" cannot be blank");
-		}
-		try {
-			return Integer.parseInt(value);
-		} catch (NumberFormatException e) {
-			throw new Exception(field+" must be a number");
-		}
-		
-	}
-	
-	private double getDouble(String field, String value, boolean allowDefault, double defValue) throws Exception {
-		if (value==null || value.length()==0) {
-			if (allowDefault)
-				return defValue;
-			throw new Exception(field+" cannot be blank");
-		}
-		try {
-			return Double.parseDouble(value);
-		} catch (NumberFormatException e) {
-			throw new Exception(field+" must be a number");
-		}
-		
-	}
-	
-	private String getValue(String field, String value) throws Exception {
-		if (value==null || value.length()==0) {
-			throw new Exception(field+" cannot be blank");
-		}
-		return value;
-	}
 	
 	
 }

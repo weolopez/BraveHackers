@@ -60,8 +60,9 @@ public class UsersAccess extends Access{
 public int addUser(User user, Connection con) throws SQLException {
 		
 		createUserTablesIfNotExist(con);
-		PreparedStatement stmt = con.prepareStatement("insert into `users` ( `firstname`, `lastname`, `password`, `username`, `authmethod`, `lat`, `lng`)  VALUES (?,?,?,?,?,?,?)");
+		PreparedStatement stmt = con.prepareStatement("insert into users ( firstname, lastname, password, username, authmethod, lat, lng, id)  VALUES (?,?,?,?,?,?,?,?)");
   
+		int id = getUserMaxId(con);
         stmt.setString(1, user.getFirstname());
         stmt.setString(2, user.getLastname());
         stmt.setString(3, user.getPassword());
@@ -69,22 +70,8 @@ public int addUser(User user, Connection con) throws SQLException {
         stmt.setString(5, user.getAuthmethod());
         stmt.setDouble(6, user.getLat());
         stmt.setDouble(7, user.getLng());
+        stmt.setInt(8,id);
         stmt.execute();
-        
-        stmt = con.prepareStatement("select `id`  from `users` where `username`=?");
-        
-        stmt.setString(1, user.getUsername());
-        stmt.execute();
-		ResultSet rs = stmt.executeQuery();
-		int id = 0;
-		try {
-			while (rs.next()) {
-				id = rs.getInt("id");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
 		return id;
 	} 
 	
@@ -180,6 +167,23 @@ public int addUser(User user, Connection con) throws SQLException {
 	        }
 	            
 	    }
+	 
+	 public int getUserMaxId(Connection con) throws SQLException {
+			int userId = 0;				
+			createUserTablesIfNotExist(con);
+			
+			PreparedStatement stmt = con.prepareStatement("select max(id)+1 id from users");
+			ResultSet rs = stmt.executeQuery();
+			
+			try {
+				while (rs.next()) {				 
+					userId = rs.getInt("id");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}  
+			return userId;
+		}
 	 
 	 
 }

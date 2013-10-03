@@ -26,7 +26,7 @@ public class Database {
 		} catch (Exception e) {
 			logger.info("running outside container");
 			Class.forName("com.mysql.jdbc.Driver");
-			return DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql","hackathon","hackathon");
+			return DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","4u2bscout");
 		}
 	}
 	

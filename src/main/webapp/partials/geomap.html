@@ -1,20 +1,30 @@
-<div>TODO write content</div>
-<p id="demo">current cords...</p>
+<div style="width: 100%;height: 100%;">
+    <gm-map  id='dragMarkerMap' gm-map-id="'dragMarkerMap'" gm-center="center" gm-zoom="zoom" gm-bounds="bounds" gm-map-type-id="mapTypeId" style="width: 100%;height: 100%;">
+        <gm-markers gm-objects="houses"
+                    gm-get-lat-lng="{ lat: object.lat, lng: object.lng}"
+                    gm-get-marker-options="options.marker"
+                    gm-on-dragend="setHouseLocation(object, marker)">
 
+        </gm-markers>
+    </gm-map> 
 
-<h3 id="drag-marker">Drag Marker</h3>
-<div class="row-fluid margin-bottom60">
-    <div class="span6"  data-drop="true" data-jqyoui-options ng-model="pin" jqyoui-droppable="{onDrop:'touchStartFn'}" >
-        <gm-map id='dragMarkerMap' gm-map-id="'dragMarkerMap'" gm-center="center" gm-zoom="zoom" gm-bounds="bounds" gm-map-type-id="mapTypeId" style="width:500px;height:500px;">
-            <gm-markers gm-objects="houses"
-                        gm-get-lat-lng="{ lat: object.lat, lng: object.lng}"
-                        gm-get-marker-options="options.marker"
-                        gm-on-dragend="setHouseLocation(object, marker)">
+    <nav id="icon-list">
+        <ul class="clearfix">
+            <li><a ng-click="dropPin()"><i class="icon-male"></i><i class="icon-female"></i> <span>Restrooms</span></a></li>
+            <li><a href="#/view2"><i class="icon-archive"></i> <span>Lost &amp; Found</span></a></li>
+            <li><a href="#/geomap"><i class="icon-male"></i><i class="icon-female"></i> <span>Restrooms</span></a></li>
+            <li><a href="#"><i class="icon-archive"></i> <span>Lost &amp; Found</span></a></li>
+            <li><a href="#"><i class="icon-male"></i><i class="icon-female"></i> <span>Restrooms</span></a></li>
+            <li><a href="#"><i class="icon-archive"></i> <span>Lost &amp; Found</span></a></li>
+            <li><a href="#"><i class="icon-male"></i><i class="icon-female"></i> <span>Restrooms</span></a></li>
+            <li><a href="#"><i class="icon-archive"></i> <span>Lost &amp; Found</span></a></li>
+            <li><a href="#"><i class="icon-male"></i><i class="icon-female"></i> <span>Restrooms</span></a></li>
+            <li><a href="#"><i class="icon-archive"></i> <span>Lost &amp; Found</span></a></li>
+            <li><a href="#"><i class="icon-male"></i><i class="icon-female"></i> <span>Restrooms</span></a></li>
+        </ul>
+    </nav>
 
-            </gm-markers>
-        </gm-map> 
-    </div>
-    <div class="span6">
+    <!--div class="span6">
         <p>
             Drag the marker to a location.
         </p>
@@ -40,7 +50,7 @@
 
     <div class="thumbnail" data-drop="true" data-jqyoui-options ng-model="list2" jqyoui-droppable="{onDrop:'touchStartFn'}" style='height:50px;'>
     <div class="btn btn-success" data-drag="false" data-jqyoui-options ng-model="list2" jqyoui-draggable ng-hide="!list2.title">{{list2.title}}</div>
-    </div>
+    </div-->
 
 
 </div>
