@@ -2,8 +2,11 @@
 
 /* Controllers */
 
-angular.module('braveHackers.controllers', ['AngularGM', 'ngResource']).
-        controller('MyCtrl1', function() {
+angular.module('braveHackers.controllers', ['AngularGM', 'ngResource'])
+        
+        .controller('HomeCtrl', function() {
+        })
+        .controller('MyCtrl1', function() {
         })
         .controller('MyCtrl2', function($scope, $location) {
             $scope.hello = 'hello world';
@@ -35,22 +38,24 @@ angular.module('braveHackers.controllers', ['AngularGM', 'ngResource']).
             	var dataToSend =  {lat: $scope.lat, lng: $scope.lng, type: "FINALLY", count:"3", vote:"8"};
                 $http({
                 	url: "/BraveHackers/crowds/lineService/addline", 
-                	//contentType: 'application/x-www-form-urlencoded',
                 	method: "PUT",
                 	data: dataToSend
+                }).success(function(data) {
+                    $scope.addPin(data);
+                    console.log('success:' + data);
+                }).error(function(data) {
+                    console.log('error:' + data);
+                    
                 });
                
-                
-           
-              
             }
 
-            $scope.addPin = function(pin, putResponseHeaders) {
+            $scope.addPin = function(pinID) {
                 $scope.houses.push({
-                    name: pin.id,
+                    name: pinID,
                     lat: $scope.lat,
                     lng: $scope.lng,
-                    icon: 'spring-hot.png'
+                    //icon: 'spring-hot.png'
                 })
                 alert("Please Move Pin to the head of the line.");
             }

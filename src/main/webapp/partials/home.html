@@ -1,0 +1,58 @@
+<div>
+    <section id="splash">
+        <nav id="splash-screen">
+            <p><a href="#login">I</a></p>
+            <p><a href="#tools" title="Love" class="heart"><i class="icon-heart"></i></a></p>
+            <p><a href="#crowds">Crowds</a></p>
+        </nav>
+    </section>
+
+    <section id="login">
+        <h1>Login</h1>
+        <form action="">
+            <p><label for="username">Username: </label> <input type="text" id="username"></p>
+            <p><label for="password">Password: </label> <input type="password" id="password"></p>
+            <p><input type="submit" value="Login"></p>
+        </form>
+    </section>
+
+    <section id="tools">
+        <h1>Tools to Make Crowds Fun</h1>
+        <nav>
+            <ul class="clearfix">
+                <li><a href="maps.html">I Love Lines</a></li>
+                <li><a href="maps.html">Sellers</a></li>
+                <li><a href="maps.html">Buyers</a></li>
+                <li><a href="maps.html">Lost</a></li>
+                <li><a href="maps.html">Found</a></li>
+                <li><a href="maps.html">Graffitti</a></li>
+            </ul>
+        </nav>
+    </section>
+
+    <section id="crowds">
+        <h1>Crowds Near You</h1>
+        <ul>
+            <li><a href="maps.html">Crowd #1</a></li>
+            <li><a href="maps.html">Crowd #2</a></li>
+            <li><a href="maps.html">Crowd #3</a></li>
+        </ul>
+    </section>
+    <script>            
+                var dWidth = $(window).outerWidth(true),
+                        dHeight = $(window).outerHeight(true);
+
+                //alert(dWidth + " x " + dHeight);
+
+                $('#splash-screen').find('a').each(function(i) {
+                    $(this).delay(i * 400).fadeIn();
+                });
+
+
+                $('#popup').click(function(e) {
+                    e.preventDefault();
+                    $('#app').append('<div class="pop">New Pop Up Div</div>');
+
+                });
+        </script>
+</div>
