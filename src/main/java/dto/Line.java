@@ -4,8 +4,8 @@ public class Line {
 	
 
 	private int id; 
-	private int lat;
-	private int lng;
+	private double lat;
+	private double lng;
 	private String type;
 	private int vote;
 	private int count;
@@ -31,24 +31,22 @@ public class Line {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public int getLat() {
+ 
+	public double getLat() {
 		return lat;
 	}
 
-	public void setLat(int lat) {
+	public void setLat(double lat) {
 		this.lat = lat;
 	}
-	
 
-	public int getLng() {
+	public double getLng() {
 		return lng;
 	}
 
-	public void setLng(int lng) {
-		this.lat = lng;
+	public void setLng(double lng) {
+		this.lng = lng;
 	}
-	
 
 	public String getType() {
 		return type;

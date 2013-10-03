@@ -1,73 +1,21 @@
 package webservice;
 
 import java.util.ArrayList;
-
+import java.lang.Integer;
+  
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.core.MediaType;
 
 import model.AccessManager;
-import model.UserManager;
 import dto.Line;
-import dto.User;
+import helper.CrowdHelper;
 
 @Path("/lineService")
 public class LineService {
-	@GET
-	@Path("/users")
-	@Produces("application/json")
-	public ArrayList<User> users() {
-		String users = null;
-		ArrayList<User> userList = new ArrayList<User>();
-		try {
-			userList = new UserManager().getUsers();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return userList;
-	}
-	
-	@PUT
-	@Produces(MediaType.TEXT_PLAIN)
-	@Path("/adduser")
-	public String adduser( @FormParam("firstname" ) String firstname , @FormParam("lastname" ) String lastname,
-			@FormParam("password" ) String password ,
-			@FormParam("username" ) String username ,
-			@FormParam("authmethod" ) String authmethod ,
-			@FormParam("lat" ) String lat ,
-			@FormParam("lng" ) String lng 
-		) {
-		System.out.print("---------" +firstname);
-		System.out.print("---------" +lastname);
-		
-		User user = new User();
-		user.setFirstname(firstname);
-		user.setLastname(lastname);
-		user.setPassword(password);
-		user.setUsername(username);
-		user.setAuthmethod(authmethod);
-		if (lat!=null && lat.trim().length() !=0)
-		{
-			user.setLat(Double.parseDouble(lat));
-		}
-		if (lng!=null && lng.trim().length() !=0)
-		{
-			user.setLng(Double.parseDouble(lng));
-		}
-		int id =0;
-		try {
-			id = new UserManager().addUser(user);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return String.valueOf(id);
-		
-	}
 	
 	@GET
 	@Path("/getlines")
@@ -83,40 +31,49 @@ public class LineService {
 		return lineList;
 	}
 	
-	@PUT		
-	@Produces(MediaType.TEXT_PLAIN)
+	
+	@PUT	
 	@Path("/addline")
-	public String addline(@FormParam("lat") int lat, 
-			@FormParam("lng") int lng,
+	@Produces(MediaType.TEXT_PLAIN)	
+	public String addline(@FormParam("lat") String inlat, 
+			@FormParam("lng") String inlng,
 			@FormParam("type") String type	,	
-			@FormParam("count") int count,
-			@FormParam("vote") int vote
+			@FormParam("count") String strcount,
+			@FormParam("vote") String strvote
 			) {
-		String lineId = "0";
+		int lineId = 0;
+		
+		try
+		{
+		
+		CrowdHelper helper = new CrowdHelper();
+		double lat = helper.getDouble("lat",inlat,false,0);
+		double lng = helper.getDouble("lat",inlng,false,0);
+		
+		int count = helper.getInt("count",strcount,false,0);
+		int vote = helper.getInt("vote",strvote,false,0);
 		
 		System.out.print("---------" +lng);
 		System.out.print("---------" +lat);
 		System.out.print("---------" +type);
-		
 		 
 		 Line line = new Line();
 		 line.setLat(lat);
 		 line.setLng(lng);
 		 line.setType(type);
 		 line.setCount(count);
-		 line.setVote(vote);
+		 line.setVote(vote); 
 		 
-	
-		 
-		 
-		try {
 			lineId = new AccessManager().addLine(line);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return lineId;
+						
+		return Integer.toString(lineId);
 		 
 	}
+	
+	
 	
 	
 }

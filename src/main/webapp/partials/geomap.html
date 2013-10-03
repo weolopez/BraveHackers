@@ -1,39 +1,46 @@
-  <div>TODO write content</div>
-        <p id="demo">current cords...</p>
+<div>TODO write content</div>
+<p id="demo">current cords...</p>
 
 
-        <h3 id="drag-marker">Drag Marker</h3>
-        <div class="row-fluid margin-bottom60">
-            <div class="span6">
-                <gm-map gm-map-id="'dragMarkerMap'" gm-center="center" gm-zoom="zoom" gm-bounds="bounds" gm-map-type-id="mapTypeId" style="width:500px;height:500px;">
-                            <gm-markers gm-objects="houses"
-                                gm-get-lat-lng="{ lat: object.lat, lng: object.lng}"
-                                gm-get-marker-options="options.marker"
+<h3 id="drag-marker">Drag Marker</h3>
+<div class="row-fluid margin-bottom60">
+    <div class="span6"  data-drop="true" data-jqyoui-options ng-model="pin" jqyoui-droppable="{onDrop:'touchStartFn'}" >
+        <gm-map id='dragMarkerMap' gm-map-id="'dragMarkerMap'" gm-center="center" gm-zoom="zoom" gm-bounds="bounds" gm-map-type-id="mapTypeId" style="width:500px;height:500px;">
+            <gm-markers gm-objects="houses"
+                        gm-get-lat-lng="{ lat: object.lat, lng: object.lng}"
+                        gm-get-marker-options="options.marker"
                         gm-on-dragend="setHouseLocation(object, marker)">
-                                    
-                    </gm-markers>
-    </gm-map> 
-            </div>
-            <div class="span6">
-                <p>
-                    Drag the marker to a location.
-                </p>
-                <p>
-                    <label>Current location:</label>
-                    {{houses[0].lat| number:2}}, {{houses[0].lng| number:2}}
-                </p>
-                <p>
-                    <label>map location:</label>
-                    {{lat| number:2}}, {{lng| number:2}}
-                    {{lat}}, {{lng}}
-                </p>
-            </div>
 
-        </div>
-        <nav>
-            <ul>
-                <li>
-                    <a><i id="draggable" class="icon-camera-retro" bh-draggable="dragObj"></i></a>
-                </li>
-            </ul>
-        </nav>
+            </gm-markers>
+        </gm-map> 
+    </div>
+    <div class="span6">
+        <p>
+            Drag the marker to a location.
+        </p>
+        <p>
+            <label>Current location:</label>
+            {{houses[0].lat| number:2}}, {{houses[0].lng| number:2}}
+        </p>
+        <p>
+            <label>map location:</label>
+            {{lat| number:2}}, {{lng| number:2}}
+            {{lat}}, {{lng}}
+        </p>
+    </div>
+
+    <nav>
+        <ul>
+            <li>
+                <a><i id="draggable" class="icon-camera-retro"  style="font-size: xx-large;" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="pin" jqyoui-draggable="{animate:true, helper: 'clone'}" ></i></a>
+            </li>
+        </ul>
+    </nav>
+
+
+    <div class="thumbnail" data-drop="true" data-jqyoui-options ng-model="list2" jqyoui-droppable="{onDrop:'touchStartFn'}" style='height:50px;'>
+    <div class="btn btn-success" data-drag="false" data-jqyoui-options ng-model="list2" jqyoui-draggable ng-hide="!list2.title">{{list2.title}}</div>
+    </div>
+
+
+</div>
