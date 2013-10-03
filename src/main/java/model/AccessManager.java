@@ -30,10 +30,10 @@ public class AccessManager {
 		return lineList;
 	}
 	
-	public String addLine(Line line) throws Exception {
+	public int addLine(Line line) throws Exception {
 		//ArrayList<Line> lineList = new ArrayList<Line>();
 		Access access = new Access();
-		String lineId = access.addLine(getConnection(), line);
+		int lineId = access.addLine(getConnection(), line);
 		return lineId;
 	}
 	
