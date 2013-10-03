@@ -10,6 +10,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import dto.Course;
+import dto.Line;
+
 
 public class Access {
 	
@@ -38,7 +40,88 @@ public class Access {
 	}
 	
 	
+	public ArrayList<Line> getLines(Connection con) throws SQLException {
+		
+		createTables_Line_IfNotExist(con);
+		ArrayList<Line> lineList = new ArrayList<Line>();
+		PreparedStatement stmt = con.prepareStatement("SELECT * FROM Line");
+		ResultSet rs = stmt.executeQuery();
+		try {
+			while (rs.next()) {
+				Line LineObj = new Line();
+				LineObj.setId(rs.getInt("id"));
+				LineObj.setLat(rs.getInt("lat"));
+				LineObj.setLng(rs.getInt("lng"));
+				LineObj.setType(rs.getString("type"));
+				LineObj.setVote(rs.getInt("vote"));
+				LineObj.setCount(rs.getInt("count"));
+				lineList.add(LineObj);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return lineList;
+	}
+
 	
+	public String addLine(Connection con, Line line) throws SQLException {
+		String lineId = "0";
+		
+		System.out.print("---------" +line.getLat());
+		System.out.print("---------" +line.getLng());
+		System.out.print("---------" +line.getType());
+		
+		
+		createTables_Line_IfNotExist(con);
+		String Insert_Line = "INSERT INTO line ( lat, lng,  type, vote, count  )  VALUES (?,?,?,?,?)";
+		
+		
+		PreparedStatement stmt = con.prepareStatement(Insert_Line);
+		
+		stmt.setDouble(1, line.getLat());
+		stmt.setInt(2, line.getLng());
+		stmt.setString(3, line.getType());
+		stmt.setInt(4, line.getVote());
+		stmt.setInt(5, line.getCount());
+		 
+		
+		stmt.execute();
+		return lineId;
+	}
+	
+	
+	private void createTables_Line_IfNotExist(Connection cnn) {
+	    if (tableExists("line", cnn)) {
+	         logger.info("table line already exists");
+	     } else 
+	     {
+	         logger.info("create table courses");
+	         String sql = "CREATE TABLE IF NOT EXISTS line ( id int(11) not null AUTO_INCREMENT, lat DECIMAL(10, 8), lng DECIMAL(10, 8), type varchar(100),  vote int(11), count int(11), PRIMARY KEY (`id`)    ) ";
+	                 
+	         executeStatement(sql, cnn); 
+	         logger.info("Create data");  
+	         
+	     }
+	         
+	 }
+	
+	private void createTables_crowds_IfNotExist(Connection cnn) {
+	    if (tableExists("crowds", cnn)) {
+	         logger.info("table line already exists");
+	     } else 
+	     {
+	         logger.info("create table courses");
+	         String sql = "CREATE TABLE IF NOT EXISTS 'crowds' ( id int(11), not null AUTO_INCREMENT, lat DECIMAL(10, 8), lng DECIMAL(10, 8), name varchar(100), PRIMARY KEY (`id`) ' ) ";
+	                 
+	         executeStatement(sql, cnn); 
+	         logger.info("Create data");  
+	         
+	     }
+	         
+	 }
+	
+
 	 private void createTablesIfNotExist(Connection cnn) {
 	       if (tableExists("courses", cnn)) {
 	            logger.info("table courses already exists");
