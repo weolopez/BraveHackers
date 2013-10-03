@@ -99,11 +99,14 @@ public class UserService {
 		
 	}
 	
-	@PUT
+	@GET
 	@Produces("application/json")
 	@Path("/addLineToUser")
-	public Acknowledgement addLineToUser( @FormParam("lineId" ) String lineId , @FormParam("userId" ) String userId
+	public Acknowledgement addLineToUser( @QueryParam("lineId" ) String lineId , @QueryParam("userId" ) String userId
 		) { 
+		
+		System.out.print("lineId---------" +lineId);
+		System.out.print("userId---------" +userId);
 		Acknowledgement ack = new Acknowledgement();
 		ack.setSuccess(false);
 		
