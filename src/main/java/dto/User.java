@@ -12,6 +12,7 @@ public class User {
 	private double lat;
 	private double lng;
 	private Date datecreated;
+	private int lineid;
 
 	public User() {
 	}
@@ -105,6 +106,18 @@ public class User {
 	public void setDatecreated(Date datecreated) {
 		this.datecreated = datecreated;
 	}
+	
+	
+
+
+	public int getLineid() {
+		return lineid;
+	}
+
+
+	public void setLineid(int lineid) {
+		this.lineid = lineid;
+	}
 
 
 	@Override
@@ -117,7 +130,8 @@ public class User {
 				", authmethod= " + authmethod  +
 				", lat= " + lat +
 				", lng= " + lng  +
-					", datecreated= " + datecreated 
+					", datecreated= " + datecreated +
+					", lineid= " + lineid 
 				 + "]";
 	}
 }

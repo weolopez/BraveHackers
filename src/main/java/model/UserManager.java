@@ -22,4 +22,11 @@ public class UserManager {
 		int id = access.addUser(user,con);
 		return id;
 	}
+	
+	public void updateLocation(double lat, double lng, int id) throws Exception {
+		Database db = new Database();
+		Connection con = db.getConnection();
+		UsersAccess access = new UsersAccess();
+		access.updateLocation(lat, lng, id, con);
+	}
 }

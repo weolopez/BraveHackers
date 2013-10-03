@@ -64,6 +64,7 @@ public class AccessManagerTest {
 		Assert.assertTrue(true);
 	}
 	
+	@Test
 	public void testIGot() throws Exception {
 		new AccessManager().iWant(1, "Milkshake", 1);
 		Assert.assertTrue(true);

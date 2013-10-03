@@ -11,7 +11,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import dto.Buyer;
-import dto.Course;
 import dto.Line;
 import dto.Product;
 import dto.Seller;
@@ -20,29 +19,6 @@ import dto.Seller;
 public class Access {
 	
 	private final Logger logger = Logger.getLogger(getClass().getName());
-	
-	public ArrayList<Course> getCourses(Connection con) throws SQLException {
-		
-		createTablesIfNotExist(con);
-		ArrayList<Course> courseList = new ArrayList<Course>();
-		PreparedStatement stmt = con.prepareStatement("SELECT * FROM courses");
-		ResultSet rs = stmt.executeQuery();
-		try {
-			while (rs.next()) {
-				Course courseObj = new Course();
-				courseObj.setId(rs.getInt("id"));
-				courseObj.setName(rs.getString("name"));
-				courseObj.setDuration(rs.getString("duration"));
-				courseObj.setFee(rs.getDouble("fee"));
-				courseList.add(courseObj);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return courseList;
-	}
-	
 	
 	public ArrayList<Line> getLines(Connection con) throws SQLException {
 		
@@ -95,13 +71,13 @@ public class Access {
 	}
 	
 	
-	private void createTables_Line_IfNotExist(Connection cnn) {
+	protected void createTables_Line_IfNotExist(Connection cnn) {
 	    if (tableExists("line", cnn)) {
 	         logger.info("table line already exists");
 	     } else 
 	     {
 	         logger.info("create table courses");
-	         String sql = "CREATE TABLE IF NOT EXISTS line ( id int(11) not null AUTO_INCREMENT, lat DECIMAL(10, 8), lng DECIMAL(10, 8), type varchar(100),  vote int(11), count int(11), PRIMARY KEY (`id`)    ) ";
+	         String sql = "CREATE TABLE IF NOT EXISTS line ( id int(11) not null AUTO_INCREMENT, lat DECIMAL(10, 8), lng DECIMAL(10, 8), type varchar(100),  vote int(11), count int(11), datecreated timestamp default now(), PRIMARY KEY (`id`)    ) ";
 	                 
 	         executeStatement(sql, cnn); 
 	         logger.info("Create data");  
@@ -116,7 +92,7 @@ public class Access {
 	     } else 
 	     {
 	         logger.info("create table courses");
-	         String sql = "CREATE TABLE IF NOT EXISTS 'crowds' ( id int(11), not null AUTO_INCREMENT, lat DECIMAL(10, 8), lng DECIMAL(10, 8), name varchar(100), PRIMARY KEY (`id`) ' ) ";
+	         String sql = "CREATE TABLE IF NOT EXISTS crowds ( id int(11), not null AUTO_INCREMENT, lat DECIMAL(10, 8), lng DECIMAL(10, 8), name varchar(100), PRIMARY KEY (`id`) ' ) ";
 	                 
 	         executeStatement(sql, cnn); 
 	         logger.info("Create data");  
@@ -126,54 +102,6 @@ public class Access {
 	 }
 	
 
-	 private void createTablesIfNotExist(Connection cnn) {
-	       if (tableExists("courses", cnn)) {
-	            logger.info("table courses already exists");
-	        } else 
-	        {
-	            logger.info("create table courses");
-	            String sql =
-	                    "CREATE TABLE IF NOT EXISTS `courses`(\n" +
-	                            "  `id` int(11)  NOT NULL AUTO_INCREMENT, \n" +
-	                            "  `name` varchar(50) NOT NULL,           \n" +
-	                            "  `duration` varchar(20) NOT NULL,       \n" +
-	                            "  `fee` double NOT NULL,                 \n" +
-	                            "  PRIMARY KEY (`id`)                     \n" +
-                            ")                                            \n";
-	            executeStatement(sql, cnn);
-	            
-	            logger.info("Create data");
-	            
-	            PreparedStatement stmt = null;
-	            try {
-	                stmt = cnn.prepareStatement("insert into `courses` (`id`, `name`, `duration`, `fee`)  VALUES (?,?,?,?)");
-	                stmt.setInt(1, 1);
-	                stmt.setString(2, "OCPJ");
-	                stmt.setString(3, "4 months");
-	                stmt.setDouble(4, 200);
-	                stmt.execute();
-	                //stmt = cnn.prepareStatement("insert into `courses` (`id`, `name`, `duration`, `fee`)  VALUES (?,?,?,?)");
-	                stmt.setInt(1, 2);
-	                stmt.setString(2, "web designing");
-	                stmt.setString(3, "6 months");
-	                stmt.setDouble(4, 180);
-	                stmt.execute();
-	                //stmt = cnn.prepareStatement("insert into `courses` (`id`, `name`, `duration`, `fee`)  VALUES (?,?,?,?)");
-	                stmt.setInt(1, 3);
-	                stmt.setString(2, "CCNA");
-	                stmt.setString(3, "2 months");
-	                stmt.setDouble(4, 250);
-	                stmt.execute();
-	            }
-	            catch (Exception e) {
-		            logger.log(Level.WARNING, "Exception inserting data:" + e.getMessage());
-	            }
-	            finally {
-	                closeQuietly(stmt);
-	            }
-	        }
-	            
-	    }
 	 
 	 public void addProduct(int userId, String product, Connection con) throws SQLException {
 		 createSellingTableIfNotExist(con);
@@ -189,7 +117,7 @@ public class Access {
 		Buyer currBuyer = null;
 		try {
 			while (rs.next()) {
-				if (currBuyer==null || !currBuyer.getUser().equals(rs.getString("user"))) {
+				if (currBuyer==null || currBuyer.getUser().getId()!=rs.getInt("userId")) {
 					currBuyer = new Buyer();
 					currBuyer.setUser(new UsersAccess().getUser(rs.getInt("userId"),con));
 					buyerList.add(currBuyer);
@@ -256,7 +184,7 @@ public class Access {
 	 
 	 public void iGot(int userId, String product, Connection con) {
 		 createBuyersTableIfNotExist(con);
-		 executeStatement("delete from buyers where userId="+userId+" and product='"+product+"')", con);
+		 executeStatement("delete from buyers where userId="+userId+" and product='"+product+"'", con);
 	 }
 	 
 	private void createSellingTableIfNotExist(Connection cnn) {
@@ -275,7 +203,7 @@ public class Access {
 		executeStatement("insert into sellers values (1,'Beer')", cnn);
 	}
 	 
-	 private boolean tableExists(String tableName, Connection cnn) {
+	protected boolean tableExists(String tableName, Connection cnn) {
 	        Statement stmt = null;
 	        try {
 	            stmt = cnn.createStatement();
@@ -289,7 +217,7 @@ public class Access {
 	    }
 	 
 	 
-	  public void executeStatement(String sql, Connection cnn) {
+	 public void executeStatement(String sql, Connection cnn) {
 	        Statement stmt = null;
 	        try {
 	            stmt = cnn.createStatement();
@@ -303,7 +231,7 @@ public class Access {
 	    }
 	  
 	  
-	  private void closeQuietly(Statement stmt) {
+	  protected void closeQuietly(Statement stmt) {
 	        if (stmt == null) {
 	            return;
 	        }
@@ -314,7 +242,7 @@ public class Access {
 	        }
 	    }
 
-	    private void closeQuietly(Connection cnn) {
+	    protected void closeQuietly(Connection cnn) {
 	        if (cnn == null) {
 	            return;
 	        }
