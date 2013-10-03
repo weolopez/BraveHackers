@@ -2,13 +2,13 @@
 
 /* Controllers */
 
-angular.module('braveHackers.controllers', ['AngularGM', 'ngDragDrop']).
+angular.module('braveHackers.controllers', ['AngularGM', 'ngResource']).
         controller('MyCtrl1', function() {
         })
         .controller('MyCtrl2', function($scope, $location) {
             $scope.hello = 'hello world';
             $scope.submit = function() {
-                backent.put({username:$scope.hello});
+                backent.put({username: $scope.hello});
                 $location.url('#/view2');
             }
         })
@@ -16,7 +16,7 @@ angular.module('braveHackers.controllers', ['AngularGM', 'ngDragDrop']).
         })
         .controller('MyCtrl4', function() {
         })
-        .controller('GeomapCtrl', function($scope, angulargmContainer) {
+        .controller('GeomapCtrl', function($scope, angulargmContainer, $resource) {
             $scope.map;
             $scope.options = {
                 map: {
@@ -31,19 +31,31 @@ angular.module('braveHackers.controllers', ['AngularGM', 'ngDragDrop']).
             };
 
             $scope.dropPin = function() {
+                var line = new $resource('/BraveHackers/crowds/lineService/addline');
+                line.lat = $scope.lat;
+                line.lng = $scope.lng;
+                line.type = 'food';
+                line.count = 3;
+                line.vote = 3;
+
+                line.save($scope.addPin);
+            }
+
+            $scope.addPin = function(pin, putResponseHeaders) {
                 $scope.houses.push({
-                    name: 'myRoom',
+                    name: pin.id,
                     lat: $scope.lat,
                     lng: $scope.lng,
                     icon: 'spring-hot.png'
                 })
                 alert("Please Move Pin to the head of the line.");
             }
+
             $scope.$watch('location', function(newVal) {
                 if (newVal !== undefined)
-                console.log('newPointlat:'+newVal.lat+' lng:'+newVal.lng);
+                    console.log('newPointlat:' + newVal.lat + ' lng:' + newVal.lng);
             });
-            
+
 
             var x = document.getElementById("demo");
 
@@ -57,7 +69,7 @@ angular.module('braveHackers.controllers', ['AngularGM', 'ngDragDrop']).
                 $scope.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                 $scope.zoom = 19;
                 $scope.map = angulargmContainer.getMap('dragMarkerMap');
-                
+
                 $scope.$apply();
             }
             ;
