@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import dao.Access;
@@ -12,6 +13,7 @@ import dao.Database;
 import dto.Buyer;
 import dto.Product;
 
+@Ignore 
 public class AccessManagerTest {
 
 	@BeforeClass

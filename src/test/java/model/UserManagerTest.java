@@ -2,12 +2,14 @@ package model;
 
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.Assert;
 
 import dto.Line;
 import dto.User;
 
+@Ignore 
 public class UserManagerTest {
 
 	@Test
