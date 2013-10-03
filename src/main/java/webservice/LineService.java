@@ -3,7 +3,7 @@ package webservice;
 import java.util.ArrayList;
 import java.lang.Integer;
   
-import javax.ws.rs.FormParam;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -12,10 +12,11 @@ import javax.ws.rs.core.MediaType;
 
 import model.AccessManager;
 import dto.Line;
-import helper.CrowdHelper;
+
 
 @Path("/lineService")
 public class LineService {
+	
 	
 	@GET
 	@Path("/getlines")
@@ -34,46 +35,34 @@ public class LineService {
 	
 	@PUT	
 	@Path("/addline")
+	@Consumes("application/json")
 	@Produces(MediaType.TEXT_PLAIN)	
-	public String addline(@FormParam("lat") String inlat, 
-			@FormParam("lng") String inlng,
-			@FormParam("type") String type	,	
-			@FormParam("count") String strcount,
-			@FormParam("vote") String strvote
+	public String addline(Line line
 			) {
 		int lineId = 0;
-		
+		 	
 		try
 		{
-			System.out.print("lat---------" +inlat);
-			System.out.print("lng---------" +inlng);
-			System.out.print("type---------" +type);
-			System.out.print("count---------" +strcount);
-			System.out.print("vote---------" +strvote);
+			System.out.print("lat---------" +line.getLat());
+			System.out.print("lng---------" +line.getLng());
+			System.out.print("type---------" +line.getType());
+			System.out.print("count---------" +line.getCount());
+			System.out.print("vote---------" +line.getVote());
 		
-		CrowdHelper helper = new CrowdHelper();
-		double lat = helper.getDouble("lat",inlat,false,0);
-		double lng = helper.getDouble("lng",inlng,false,0);
-		
-		int count = helper.getInt("count",strcount,false,0);
-		int vote = helper.getInt("vote",strvote,false,0);
-		
-		 
-		 Line line = new Line();
-		 line.setLat(lat);
-		 line.setLng(lng);
-		 line.setType(type);
-		 line.setCount(count);
-		 line.setVote(vote); 
 		 
 		 lineId = new AccessManager().addLine(line);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-						
+		System.out.print("lineId: " +lineId);			
 		return Integer.toString(lineId);
 		 
 	}
+
+
+	
+	
+	
 	
 	
 	

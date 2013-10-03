@@ -16,7 +16,7 @@ angular.module('braveHackers.controllers', ['AngularGM', 'ngResource']).
         })
         .controller('MyCtrl4', function() {
         })
-        .controller('GeomapCtrl', function($scope, angulargmContainer, $resource) {
+        .controller('GeomapCtrl', function($scope, angulargmContainer, $http) {
             $scope.map;
             $scope.options = {
                 map: {
@@ -31,14 +31,18 @@ angular.module('braveHackers.controllers', ['AngularGM', 'ngResource']).
             };
 
             $scope.dropPin = function() {
-                var line = new $resource('/BraveHackers/crowds/lineService/addline');
-                line.lat = $scope.lat;
-                line.lng = $scope.lng;
-                line.type = 'food';
-                line.count = 3;
-                line.vote = 3;
-
-                line.save($scope.addPin);
+            
+            	var dataToSend =  {lat: $scope.lat, lng: $scope.lng, type: "FINALLY", count:"3", vote:"8"};
+                $http({
+                	url: "/BraveHackers/crowds/lineService/addline", 
+                	//contentType: 'application/x-www-form-urlencoded',
+                	method: "PUT",
+                	data: dataToSend
+                });
+               
+                
+           
+              
             }
 
             $scope.addPin = function(pin, putResponseHeaders) {
