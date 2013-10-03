@@ -11,5 +11,7 @@ angular.module('myApp.controllers', []).
 })
         .controller('MyCtrl4', function() {
 })
+        .controller('GeocodeCtrl', function() {
+})
         ;
         

@@ -24,15 +24,31 @@ and open the template in the editor.
 
                         $scope.lat = 46;
                         $scope.lng = -122;
-                        
+
+                        $scope.houses = [{
+                                name: 'myHouse',
+                                lat: 46,
+                                lng: -122
+                            }];
+
                         function showPosition(position)
                         {
                             $scope.lat = position.coords.latitude;
                             $scope.lng = position.coords.longitude;
-                            $scope.$apply();
-                        };
+                            $scope.houses[0].lat = position.coords.latitude;
+                            $scope.houses[0].lng = position.coords.longitude;
 
-                      
+                            $scope.$apply();
+                        }
+                        ;
+
+                        var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+                        var marker = new google.maps.Marker({
+                            position: $scope.myLatLng,
+                            map: $scope.map,
+                            icon: iconBase + 'schools_maps.png',
+                            shadow: iconBase + 'schools_maps.shadow.png'
+                        });
 
                         if (navigator.geolocation)
                         {
@@ -69,14 +85,16 @@ and open the template in the editor.
 
         </script>
         <div>TODO write content</div>
-        <p id="demo">current cords...</p>
-
-
         <h3 id="drag-marker">Drag Marker</h3>
         <div class="row-fluid margin-bottom60" ng-controller="MyCtrl1">
             <div class="span6">
-                <gm-map gm-map-id="'myMap'" gm-center="center" gm-zoom="zoom" gm-map-options="options.map" class="map">
+                <gm-map gm-map-id="'myMap'" gm-center="center" gm-zoom="zoom" gm-map-options="options.map" class="map" style="width:500px;height:500px;">
+                    <gm-markers gm-objects="houses"
+                                gm-get-lat-lng="{ lat: object.lat, lng: object.lng}"
+                                gm-get-marker-options="options.marker"
+                                gm-on-dragend="setHouseLocation(object, marker)">
 
+                    </gm-markers>
                 </gm-map>
             </div>
             <div class="span6">
@@ -90,18 +108,18 @@ and open the template in the editor.
                 <p>
                     <label>map location:</label>
                     {{lat| number:2}}, {{lng| number:2}}
-                    {{lat}}, {{lng}}
                 </p>
             </div>
-                <gm-map gm-map-id="'dragMarkerMap'" gm-center="center" gm-zoom="zoom" gm-bounds="bounds" gm-map-type-id="mapTypeId" style="width:500px;height:500px;">
-                            <gm-markers gm-objects="houses"
-                                gm-get-lat-lng="{ lat: object.lat, lng: object.lng}"
-                                gm-get-marker-options="options.marker"
-                        gm-on-dragend="setHouseLocation(object, marker)">
-                                    
-                    </gm-markers>
-    </gm-map> 
+
         </div>
+
+        <nav id="icon-list">
+            <ul>
+                <li>
+                    <a href=""></a>
+                </li>
+            </ul>
+        </nav>
 
     </body>
 </html>
