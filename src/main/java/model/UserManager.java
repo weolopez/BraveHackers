@@ -29,4 +29,11 @@ public class UserManager {
 		UsersAccess access = new UsersAccess();
 		access.updateLocation(lat, lng, id, con);
 	}
+	
+	public void updateLine(int lineid, int id) throws Exception {
+		Database db = new Database();
+		Connection con = db.getConnection();
+		UsersAccess access = new UsersAccess();
+		access.updateLine(lineid, id, con);
+	}
 }
