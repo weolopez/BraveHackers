@@ -3,6 +3,7 @@ package webservice;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -40,6 +41,24 @@ public class BuyerService {
 			if (product==null || product.length()==0)
 				throw new Exception("product cannot be blank");
 			new AccessManager().iWant(userIdInt, product, quantityInt);
+			ack.setSuccess(true);
+		} catch (Exception e) {
+			ack.setReason(e.getMessage());
+		}
+		return ack;
+	}
+
+	@DELETE
+	@Path("/iGot")
+	@Produces("application/json")
+	public Acknowledgement iGot(@FormParam("userId" ) String userId, @FormParam("product" ) String product) {
+		Acknowledgement ack = new Acknowledgement();
+		ack.setSuccess(false);
+		try {
+			int userIdInt = getInt("userId",userId,false,0);
+			if (product==null || product.length()==0)
+				throw new Exception("product cannot be blank");
+			new AccessManager().iGot(userIdInt, product);
 			ack.setSuccess(true);
 		} catch (Exception e) {
 			ack.setReason(e.getMessage());
