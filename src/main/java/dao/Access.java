@@ -14,6 +14,7 @@ import dto.Buyer;
 import dto.Course;
 import dto.Line;
 import dto.Product;
+import dto.Seller;
 
 
 public class Access {
@@ -174,9 +175,9 @@ public class Access {
 	            
 	    }
 	 
-	 public void addProduct(String user, String product, Connection con) throws SQLException {
+	 public void addProduct(int userId, String product, Connection con) throws SQLException {
 		 createSellingTableIfNotExist(con);
-		 executeStatement("insert into selling values('"+user+"','"+product+"')", con);
+		 executeStatement("insert into sellers values('"+userId+"','"+product+"')", con);
 	 }
 	 
 	public List<Buyer> getBuyers(int userId, Connection con) throws SQLException {
@@ -188,7 +189,7 @@ public class Access {
 		Buyer currBuyer = null;
 		try {
 			while (rs.next()) {
-				if (currBuyer==null || currBuyer.getUser().equals(rs.getString("user"))) {
+				if (currBuyer==null || !currBuyer.getUser().equals(rs.getString("user"))) {
 					currBuyer = new Buyer();
 					currBuyer.setUser(new UsersAccess().getUser(rs.getInt("userId"),con));
 					buyerList.add(currBuyer);
@@ -214,15 +215,50 @@ public class Access {
 			String sql = "CREATE TABLE IF NOT EXISTS `buyers`(\n"
 					+ "  `userid` int NOT NULL, \n"
 					+ "  `product` varchar(50) NOT NULL, \n"
-					+ "  `quantity` int NOT NULL\n"
-					+ ")                                            \n";
+					+ "  `quantity` int NOT NULL, \n"
+                    + "  PRIMARY KEY (`userId`,`product`)\n"
+					+ ")";
 			executeStatement(sql, cnn);
 			logger.info("Create data");
 			executeStatement("insert into buyers values ('2','Beer', 1)", cnn);
 	}
 
+	 public List<Product> getSellerProducts(Connection con) throws SQLException {
+		 createSellingTableIfNotExist(con);
+		 
+			ArrayList<Product> productList = new ArrayList<Product>();
+			PreparedStatement stmt = con.prepareStatement("SELECT * FROM sellers order by product");
+			ResultSet rs = stmt.executeQuery();
+			Product currProduct = null;
+			try {
+				while (rs.next()) {
+					if (currProduct==null || !currProduct.getName().equals(rs.getString("product"))) {
+						currProduct = new Product();
+						currProduct.setName(rs.getString("product"));
+						currProduct.setQuantity(-1);
+						productList.add(currProduct);
+					}
+					Seller seller = new Seller();
+					seller.setUser(new UsersAccess().getUser(rs.getInt("userId"), con));
+					currProduct.getSellers().add(seller);
+					}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 
+			return productList;
+	 }
 
+	 public void iWant(int userId, String product, int quantity, Connection con) {
+		 createBuyersTableIfNotExist(con);
+		 executeStatement("insert into buyers values('"+userId+"','"+product+"',"+quantity+")", con);
+	 }
+	 
+	 public void iGot(int userId, String product, Connection con) {
+		 createBuyersTableIfNotExist(con);
+		 executeStatement("delete from buyers where userId="+userId+" and product='"+product+"')", con);
+	 }
+	 
 	private void createSellingTableIfNotExist(Connection cnn) {
 		if (tableExists("sellers", cnn)) {
 			logger.info("table selling already exists");
@@ -231,8 +267,9 @@ public class Access {
 		logger.info("create table sellers");
 		String sql = "CREATE TABLE IF NOT EXISTS `sellers`(\n"
 				+ "  `userId` int NOT NULL, \n"
-				+ "  `product` varchar(50) NOT NULL\n"
-				+ ")                                            \n";
+				+ "  `product` varchar(50) NOT NULL, \n"
+                + "  PRIMARY KEY (`userId`,`product`) \n"
+				+ ")";
 		executeStatement(sql, cnn);
 		logger.info("Create data");
 		executeStatement("insert into sellers values (1,'Beer')", cnn);
@@ -252,12 +289,13 @@ public class Access {
 	    }
 	 
 	 
-	  private void executeStatement(String sql, Connection cnn) {
+	  public void executeStatement(String sql, Connection cnn) {
 	        Statement stmt = null;
 	        try {
 	            stmt = cnn.createStatement();
 	            stmt.execute(sql);
 	        } catch (SQLException e) {
+	        	logger.warning(e.toString());
 	            throw new RuntimeException("Exception executing '" + sql + "'", e);
 	        } finally {
 	            closeQuietly(stmt);
