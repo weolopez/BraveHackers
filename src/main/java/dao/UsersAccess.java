@@ -15,11 +15,28 @@ public class UsersAccess {
 	
 	private final Logger logger = Logger.getLogger(getClass().getName());
 	
+	public User getUser(int id, Connection con) throws SQLException {
+		ArrayList<User> users = getUsers(id,con);
+		if (users.size()>0)
+			return users.get(0);
+		return null;
+	}
+	
 	public ArrayList<User> getUsers(Connection con) throws SQLException {
+		return getUsers(-1,con);
+	}
+	
+	public ArrayList<User> getUsers(int id, Connection con) throws SQLException {
 		
 		createTablesIfNotExist(con);
 		ArrayList<User> userList = new ArrayList<User>();
-		PreparedStatement stmt = con.prepareStatement("SELECT * FROM users");
+		
+		String sql = "SELECT * FROM users";
+		if (id>0) {
+			sql += " where id="+id;
+		}
+		
+		PreparedStatement stmt = con.prepareStatement(sql);
 		ResultSet rs = stmt.executeQuery();
 		try {
 			while (rs.next()) {
