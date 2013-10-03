@@ -3,7 +3,10 @@ package dao;
 import javax.naming.InitialContext;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
+
 import javax.sql.DataSource;
+
 import java.util.logging.Logger;
 
 
@@ -19,12 +22,11 @@ public class Database {
 			DataSource ds = (DataSource) ctx.lookup(datasourceName);
 			Connection conn = ds.getConnection();
 			logger.info("getting connection");
-			
 			return conn;
-		
-	
 		} catch (Exception e) {
-			throw e;
+			logger.info("running outside container");
+			Class.forName("com.mysql.jdbc.Driver");
+			return DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql","hackathon","hackathon");
 		}
 	}
 	

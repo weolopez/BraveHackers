@@ -15,11 +15,28 @@ public class UsersAccess {
 	
 	private final Logger logger = Logger.getLogger(getClass().getName());
 	
+	public User getUser(int id, Connection con) throws SQLException {
+		ArrayList<User> users = getUsers(id,con);
+		if (users.size()>0)
+			return users.get(0);
+		return null;
+	}
+	
 	public ArrayList<User> getUsers(Connection con) throws SQLException {
+		return getUsers(-1,con);
+	}
+	
+	public ArrayList<User> getUsers(int id, Connection con) throws SQLException {
 		
 		createTablesIfNotExist(con);
 		ArrayList<User> userList = new ArrayList<User>();
-		PreparedStatement stmt = con.prepareStatement("SELECT * FROM users");
+		
+		String sql = "SELECT * FROM users";
+		if (id>0) {
+			sql += " where id="+id;
+		}
+		
+		PreparedStatement stmt = con.prepareStatement(sql);
 		ResultSet rs = stmt.executeQuery();
 		try {
 			while (rs.next()) {
@@ -72,8 +89,26 @@ public int addUser(User user, Connection con) throws SQLException {
 		return id;
 	} 
 	
+    public void updateLocation(double lat, double lng, int id, Connection con) {
+	
+    	createTablesIfNotExist(con);
+    	try {
+    		PreparedStatement stmt = con.prepareStatement("update users set lat=?,lng=? where id=?");
+    		stmt.setDouble(1, lat);
+    		stmt.setDouble(2, lng);
+    		stmt.setInt(3, id);
+    		stmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    } 
+
 	
 	 private void createTablesIfNotExist(Connection cnn) {
+		 
+	     Access access = new Access();	     
+		 access.createTables_Line_IfNotExist(cnn);
+	           
 	       if (tableExists("users", cnn)) {
 	            logger.info("table users already exists");
 	        } else 
@@ -89,9 +124,15 @@ public int addUser(User user, Connection con) throws SQLException {
 	                            "  `authmethod` varchar(50) NOT NULL,         \n" +
 	                            "  `lat` DECIMAL(10, 8) ,         \n" +
 	                            "  `lng` DECIMAL(11, 8) ,         \n" +
-	                            "  `datecreated` timestamp default now() ,         \n" +	
-	                            "  PRIMARY KEY (`id`)                     \n" +
+	                            "  `datecreated` timestamp ,         \n" +	
+	                            "  `lineid` int(11) , \n" +
+	                            "  PRIMARY KEY (`id`),                    \n" +
+	                            "  FOREIGN KEY (`lineid`) REFERENCES line(id)                     \n" +
                             ")                                            \n";
+	            
+	         
+
+	            
 	            executeStatement(sql, cnn);
 	            
 	            logger.info("Create user data");
@@ -100,19 +141,19 @@ public int addUser(User user, Connection con) throws SQLException {
 	            try {
 	                stmt = cnn.prepareStatement("insert into `users` (`id`, `firstname`, `lastname`, `password`, `username`, `authmethod`, `lat`, `lng`)  VALUES (?,?,?,?,?,?,?,?)");
 	                stmt.setInt(1, 1);
-	                stmt.setString(2, "Kelley");
-	                stmt.setString(3, "Mantione");
-	                stmt.setString(4, "kelleypass");
-	                stmt.setString(5, "kelleymantione");
+	                stmt.setString(2, "Walter");
+	                stmt.setString(3, "White");
+	                stmt.setString(4, "walterpass");
+	                stmt.setString(5, "walterwhite");
 	                stmt.setString(6, "twitter");
 	                stmt.setDouble(7, 40.71727401);
 	                stmt.setDouble(8, -74.00898606);
 	                stmt.execute();
 	                stmt.setInt(1, 2);
-	                stmt.setString(2, "Molly");
-	                stmt.setString(3, "Lopez");
-	                stmt.setString(4, "mollypass");
-	                stmt.setString(5, "mollylopez");
+	                stmt.setString(2, "Nick");
+	                stmt.setString(3, "Brody");
+	                stmt.setString(4, "nickpass");
+	                stmt.setString(5, "nickbrody");
 	                stmt.setString(6, "twitter");
 	                stmt.setDouble(7, 40.71727401);
 	                stmt.setDouble(8, -74.00898606);
