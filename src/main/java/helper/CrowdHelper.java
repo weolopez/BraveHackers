@@ -7,7 +7,7 @@ public class CrowdHelper {
 		if (value==null || value.length()==0) {
 			if (allowDefault)
 				return defValue;
-			throw new Exception(field+" cannot be blank");
+			else throw new Exception(field+" cannot be blank");
 		}
 		try {
 			return Integer.parseInt(value);
@@ -21,7 +21,7 @@ public class CrowdHelper {
 		if (value==null || value.length()==0) {
 			if (allowDefault)
 				return defValue;
-			throw new Exception(field+" cannot be blank");
+			else throw new Exception(field+" cannot be blank");
 		}
 		try {
 			return Double.parseDouble(value);
