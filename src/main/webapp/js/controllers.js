@@ -5,7 +5,12 @@
 angular.module('myApp.controllers', ['AngularGM', 'ngDragDrop']).
         controller('MyCtrl1', function() {
         })
-        .controller('MyCtrl2', function() {
+        .controller('MyCtrl2', function($scope, $location) {
+            $scope.hello = 'hello world';
+            $scope.submit = function() {
+                backent.put({username:$scope.hello});
+                $location.url('#/view2');
+            }
         })
         .controller('MyCtrl3', function() {
         })
