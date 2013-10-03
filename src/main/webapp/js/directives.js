@@ -12,8 +12,9 @@ angular.module('myApp.directives', [])
     return {
         restrict: 'A',
         link: function(scope, elm, attrs) {
-            var options = scope.$eval(attrs.andyDraggable); //allow options to be passed in
-            elm.draggable(options);
+            var options = scope.$eval(attrs.bhDraggable); //allow options to be passed in
+            var element = $(elm);
+            element.draggable(options);
         }
     };
 });
