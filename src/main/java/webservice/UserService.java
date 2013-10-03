@@ -7,7 +7,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -77,12 +76,15 @@ public class UserService {
 	
 
 	
-	@PUT
+	@GET
 	@Produces("application/json")
 	@Path("/updateUserLocation")
-	public Acknowledgement updateUserLocation( @FormParam("lat" ) String inlat , @FormParam("lng" ) String inlng,
-			@FormParam("userId" ) String userId 
+	public Acknowledgement updateUserLocation( @QueryParam("lat" ) String inlat , @QueryParam("lng" ) String inlng,
+			@QueryParam("userId" ) String userId 
 		) {
+		System.out.print("inlat---------" +inlat);
+		System.out.print("inlng---------" +inlng);
+		System.out.print("userId---------" +userId);
 		Acknowledgement ack = new Acknowledgement();
 		ack.setSuccess(false);		
 		try
@@ -105,8 +107,6 @@ public class UserService {
 	public Acknowledgement addLineToUser( @QueryParam("lineId" ) String lineId , @QueryParam("userId" ) String userId
 		) { 
 		
-		System.out.print("lineId---------" +lineId);
-		System.out.print("userId---------" +userId);
 		Acknowledgement ack = new Acknowledgement();
 		ack.setSuccess(false);
 		
