@@ -10,6 +10,7 @@ import dao.Database;
 import dto.Buyer;
 import dto.Course;
 import dto.Line;
+import dto.Product;
 
 
 
@@ -38,6 +39,14 @@ public class AccessManager {
 	
 	public List<Buyer> getBuyers(int userId) throws SQLException, Exception {
 		return new Access().getBuyers(userId, getConnection());
+	}
+	
+	public void addProduct(int userId, String productName) throws SQLException, Exception {
+		new Access().addProduct(userId, productName, getConnection());
+	}
+	
+	public List<Product> getSellerProducts() throws SQLException, Exception {
+		return new Access().getSellerProducts(getConnection());
 	}
 	
 	private Connection getConnection() throws Exception {
