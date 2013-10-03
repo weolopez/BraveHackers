@@ -74,6 +74,10 @@ public int addUser(User user, Connection con) throws SQLException {
 	
 	
 	 private void createTablesIfNotExist(Connection cnn) {
+		 
+	     Access access = new Access();	     
+		 access.createTables_Line_IfNotExist(cnn);
+	           
 	       if (tableExists("users", cnn)) {
 	            logger.info("table users already exists");
 	        } else 
@@ -90,8 +94,14 @@ public int addUser(User user, Connection con) throws SQLException {
 	                            "  `lat` DECIMAL(10, 8) ,         \n" +
 	                            "  `lng` DECIMAL(11, 8) ,         \n" +
 	                            "  `datecreated` timestamp default now() ,         \n" +	
-	                            "  PRIMARY KEY (`id`)                     \n" +
+	                            "  `lineid` int(11) , \n" +
+	                            "  PRIMARY KEY (`id`),                    \n" +
+	                            "  FOREIGN KEY (`lineid`) REFERENCES line(id)                     \n" +
                             ")                                            \n";
+	            
+	         
+
+	            
 	            executeStatement(sql, cnn);
 	            
 	            logger.info("Create user data");

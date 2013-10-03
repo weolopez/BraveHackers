@@ -91,7 +91,7 @@ public class Access {
 	}
 	
 	
-	private void createTables_Line_IfNotExist(Connection cnn) {
+	public void createTables_Line_IfNotExist(Connection cnn) {
 	    if (tableExists("line", cnn)) {
 	         logger.info("table line already exists");
 	     } else 
