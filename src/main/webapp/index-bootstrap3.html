@@ -11,7 +11,8 @@
 
         <!-- Bootstrap core CSS -->
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-
+        <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet" />
+    
         <!-- Optional theme -->
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
 
@@ -46,7 +47,8 @@
                                 <li><a href="#/view1">view1</a></li>
                                 <li><a href="#/view2">view2</a></li>   
                                 <li><a href="#/view3">view3</a></li>    
-                                <li><a href="#/view4">view4</a></li>    
+                                <li><a href="#/view4">view4</a></li>
+                                <li><a href="#/geomap">geomap</a></li>      
                                 <li><a href="#about">About</a></li>
                                 <li><a href="#contact">Contact</a></li>
                                 <li class="dropdown">
@@ -135,15 +137,18 @@
         <!-- Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-        <script src="http://code.jquery.com/jquery-2.0.3.js"></script>
-        <script src="lib/bootstrap/bootstrap3.0.min.js"></script>
+        <script src="//maps.googleapis.com/maps/api/js?sensor=false"></script>
+        <!--script src="http://code.jquery.com/jquery-2.0.3.js"></script>
+        <script src="lib/bootstrap/bootstrap3.0.min.js"></script  too much recurrsion-->
         <script src="lib/bootstrap/holder.js"></script>
         <script src="lib/angular/angular1.2.js"></script>
         <script src="lib/angular/angular-animate1.2.js"></script>
-        <script src="lib/angular/angular-route1.2.js"></script>
-        <script src="lib/mongolabResourceHttp/mongolabResourceHttp.js"></script>
+        <script src="lib/angular/angular-route1.2.js"></script>        
+        <script src="/BraveHackersNew/lib/angular/angular-touch1.2.js"></script>
+        <script src="//angulargm.herokuapp.com/angular-gm-0.3.0.min.js"></script>
+        <!--script src="lib/mongolabResourceHttp/mongolabResourceHttp.js"></scrip>
         <script src="lib/ng-grid/ng-grid-2.0.7.debug.js"></script>
-        <script src="lib/bootstrap/ui-bootstrap-tpls-0.5.0.js"></script>  
+        <script src="lib/bootstrap/ui-bootstrap-tpls-0.5.0.js"></script-->  
         <script src="js/app.js"></script>
         <script src="js/services.js"></script>
         <script src="js/controllers.js"></script>
