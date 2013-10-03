@@ -1,39 +1,63 @@
-  <div>TODO write content</div>
-        <p id="demo">current cords...</p>
+<div>TODO write content</div>
+<p id="demo">current cords...</p>
 
 
-        <h3 id="drag-marker">Drag Marker</h3>
-        <div class="row-fluid margin-bottom60">
-            <div class="span6">
-                <gm-map gm-map-id="'dragMarkerMap'" gm-center="center" gm-zoom="zoom" gm-bounds="bounds" gm-map-type-id="mapTypeId" style="width:500px;height:500px;">
-                            <gm-markers gm-objects="houses"
-                                gm-get-lat-lng="{ lat: object.lat, lng: object.lng}"
-                                gm-get-marker-options="options.marker"
+<h3 id="drag-marker">Drag Marker</h3>
+<div class="row-fluid margin-bottom60">
+    <div class="span6">
+        <gm-map gm-map-id="'dragMarkerMap'" gm-center="center" gm-zoom="zoom" gm-bounds="bounds" gm-map-type-id="mapTypeId" style="width:500px;height:500px;">
+            <gm-markers gm-objects="houses"
+                        gm-get-lat-lng="{ lat: object.lat, lng: object.lng}"
+                        gm-get-marker-options="options.marker"
                         gm-on-dragend="setHouseLocation(object, marker)">
-                                    
-                    </gm-markers>
-    </gm-map> 
-            </div>
-            <div class="span6">
-                <p>
-                    Drag the marker to a location.
-                </p>
-                <p>
-                    <label>Current location:</label>
-                    {{houses[0].lat| number:2}}, {{houses[0].lng| number:2}}
-                </p>
-                <p>
-                    <label>map location:</label>
-                    {{lat| number:2}}, {{lng| number:2}}
-                    {{lat}}, {{lng}}
-                </p>
-            </div>
 
-        </div>
-        <nav>
-            <ul>
-                <li>
-                    <a><i id="draggable" class="icon-camera-retro" bh-draggable="dragObj"></i></a>
-                </li>
-            </ul>
-        </nav>
+            </gm-markers>
+        </gm-map> 
+    </div>
+    <div class="span6">
+        <p>
+            Drag the marker to a location.
+        </p>
+        <p>
+            <label>Current location:</label>
+            {{houses[0].lat| number:2}}, {{houses[0].lng| number:2}}
+        </p>
+        <p>
+            <label>map location:</label>
+            {{lat| number:2}}, {{lng| number:2}}
+            {{lat}}, {{lng}}
+        </p>
+    </div>
+<div id="products">
+  <h1 class="ui-widget-header">Products</h1>
+  <div id="catalog">
+    <h2><a href="#">T-Shirts</a></h2>
+    <div data-drop="true" ng-model='list1' jqyoui-droppable="{multiple:true}">
+      <ul>
+        <li ng-repeat='item in list1' ng-show="item.title" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="list1" jqyoui-draggable="{index: {{$index}}, animate: true, placeholder: 'keep'}">{{item.title}}</li>
+      </ul>
+    </div>
+    <h2><a href="#">Bags</a></h2>
+    <div data-drop="true" ng-model='list2' jqyoui-droppable="{multiple:true}">
+      <ul>
+        <li ng-repeat='item in list2' ng-show="item.title" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="list2" jqyoui-draggable="{index: {{$index}}, placeholder: 'keep'}">{{item.title}}</li>
+      </ul>
+    </div>
+    <h2><a href="#">Gadgets</a></h2>
+    <div data-drop="true" ng-model='list3' jqyoui-droppable="{multiple:true}">
+      <ul>
+        <li ng-repeat='item in list3' ng-show="item.title" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="list3" jqyoui-draggable="{index: {{$index}}, placeholder: 'keep'}">{{item.title}}</li>
+      </ul>
+    </div>
+  </div>
+</div> 
+<div id="cart">
+    <h1 class="ui-widget-header">Shopping Cart</h1>
+    <div class="ui-widget-content">
+        <ol data-drop="true" ng-model='list4' jqyoui-droppable="{multiple:true}">
+            <li ng-repeat="item in list4" ng-show="item.title" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="list4" jqyoui-draggable="{index: {{$index}},animate:true}">{{item.title}}</li>
+            <li class="placeholder" ng-hide="hideMe()">Add your items here</li>
+        </ol>
+    </div>
+</div>
+</div>

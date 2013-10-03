@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-angular.module('myApp.controllers', ['AngularGM', 'ngTouch']).
+angular.module('myApp.controllers', ['AngularGM','ngDragDrop']).
         controller('MyCtrl1', function() {
         })
         .controller('MyCtrl2', function() {
@@ -14,12 +14,12 @@ angular.module('myApp.controllers', ['AngularGM', 'ngTouch']).
         .controller('GeomapCtrl', function($scope) {
             var overlay;
             
-            $scope.dragObj = {
-                helper: 'clone',
-                stop: function(e) {
+            $scope.touchStartFn = function(e) {
+                var a = e;
+             /*   stop: function(e) {
                     var point = new google.maps.Point(e.pageX,e.pageY);
                     var ll = overlay.getProjection().fromContainerPixelToLatLng(point);
-                }
+                }*/
             }
             var x = document.getElementById("demo");
 
@@ -31,6 +31,7 @@ angular.module('myApp.controllers', ['AngularGM', 'ngTouch']).
                 $scope.lat = position.coords.latitude;
                 $scope.lng = position.coords.longitude;
                 $scope.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                $scope.zoom = 19;
                 $scope.$apply();
             }
             ;
