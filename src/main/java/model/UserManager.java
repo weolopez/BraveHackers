@@ -15,6 +15,19 @@ public class UserManager {
 		userList = access.getUsers(con);
 		return userList;
 	}
+	
+	public User getUser(int id) throws Exception {
+		ArrayList<User> userList = new ArrayList<User>();
+		Database db = new Database();
+		Connection con = db.getConnection();
+		UsersAccess access = new UsersAccess();
+		userList = access.getUsers(id, con);
+		if (userList!=null && userList.size() >0 )
+		{
+			return userList.get(0);
+		}
+		return null;
+	}
 	public int addUser(User user) throws Exception {
 		Database db = new Database();
 		Connection con = db.getConnection();

@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import dto.User;
@@ -103,71 +102,6 @@ public int addUser(User user, Connection con) throws SQLException {
     } 
 
 	
-	 private void createUserTablesIfNotExist(Connection cnn) {
-		 	     
-		 createTables_Line_IfNotExist(cnn);
-	           
-	       if (tableExists("users", cnn)) {
-	            logger.info("table users already exists");
-	        } else 
-	        {
-	            logger.info("create table users");
-	            String sql =
-	                    "CREATE TABLE IF NOT EXISTS `users`(\n" +
-	                            "  `id` int(11)  NOT NULL AUTO_INCREMENT, \n" +
-	                            "  `firstname` varchar(50) NOT NULL,          \n" +
-	                            "  `lastname` varchar(50) NOT NULL,           \n" +
-	                            "  `password` varchar(50) NOT NULL,           \n" +
-	                            "  `username` varchar(50) NOT NULL,           \n" +
-	                            "  `authmethod` varchar(50) NOT NULL,         \n" +
-	                            "  `lat` DECIMAL(10, 8) ,         \n" +
-	                            "  `lng` DECIMAL(11, 8) ,         \n" +
-	                            "  `datecreated` timestamp ,         \n" +	
-	                            "  `lineid` int(11) , \n" +
-	                            "  PRIMARY KEY (`id`),                    \n" +
-	                            "  FOREIGN KEY (`lineid`) REFERENCES line(id)                     \n" +
-                            ")                                            \n";
-	            
-	         
-
-	            
-	            executeStatement(sql, cnn);
-	            
-	            logger.info("Create user data");
-	            
-	            PreparedStatement stmt = null;
-	            try {
-	                stmt = cnn.prepareStatement("insert into `users` (`id`, `firstname`, `lastname`, `password`, `username`, `authmethod`, `lat`, `lng`)  VALUES (?,?,?,?,?,?,?,?)");
-	                stmt.setInt(1, 1);
-	                stmt.setString(2, "Walter");
-	                stmt.setString(3, "White");
-	                stmt.setString(4, "walterpass");
-	                stmt.setString(5, "walterwhite");
-	                stmt.setString(6, "twitter");
-	                stmt.setDouble(7, 40.71727401);
-	                stmt.setDouble(8, -74.00898606);
-	                stmt.execute();
-	                stmt.setInt(1, 2);
-	                stmt.setString(2, "Nick");
-	                stmt.setString(3, "Brody");
-	                stmt.setString(4, "nickpass");
-	                stmt.setString(5, "nickbrody");
-	                stmt.setString(6, "twitter");
-	                stmt.setDouble(7, 40.71727401);
-	                stmt.setDouble(8, -74.00898606);
-	                stmt.execute();
-	               
-	            }
-	            catch (Exception e) {
-		            logger.log(Level.WARNING, "Exception inserting data:" + e.getMessage());
-	            }
-	            finally {
-	                closeQuietly(stmt);
-	            }
-	        }
-	            
-	    }
-	 
 	 public int getUserMaxId(Connection con) throws SQLException {
 			int userId = 0;				
 			createUserTablesIfNotExist(con);

@@ -71,15 +71,12 @@ public class Line {
 	public void setCount(int count) {
 		this.count = count;
 	}
-	
-
-	
-
-	 
 
 	@Override
 	public String toString() {
-		return "Course [id=" + id + ", lng=" + lng + ", lat=" + lat + ", type=" + type
-				+ ", vote=" + vote + ", count=" + count +"]";
+		return "Line [id=" + id + ", lat=" + lat + ", lng=" + lng + ", type="
+				+ type + ", vote=" + vote + ", count=" + count + "]";
 	}
+	
+	
 }
