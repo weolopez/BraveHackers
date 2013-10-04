@@ -1,7 +1,7 @@
 angular.module('sellApp', ['ngRoute', 'ngAnimate', 'AngularGM', 'ngResource', 'timer'])
         .config(['$routeProvider', function($routeProvider) {
                 $routeProvider.when('/geomap', {templateUrl: 'partials/geomap.html', controller: 'GeomapCtrl'});
-                $routeProvider.when('/editLine', {templateUrl: 'partials/editLine.html', controller: 'EditLineCtrl'});
+                $routeProvider.when('/editLine', {templateUrl: 'partials/editSell.html', controller: 'EditLineCtrl'});
                 $routeProvider.when('/editLineCount', {templateUrl: 'partials/editLineCount.html', controller: 'EditLineCountCtrl'});
                 $routeProvider.otherwise({redirectTo: '/geomap'});
             }])
@@ -52,32 +52,12 @@ angular.module('sellApp', ['ngRoute', 'ngAnimate', 'AngularGM', 'ngResource', 't
         .controller('GeomapCtrl', function($scope, angulargmContainer, $http, $location, $rootScope) {
             $scope.types = [
                 {
-                    name: "beer",
-                    icon: "icon-beer"
-                },
-                {
-                    name: "toilet",
-                    icon: "icon-female"
-                },
-                {
-                    name: "food",
-                    icon: "icon-archive"
-                },
-                {
-                    name: "ATM",
+                    name: "Selling",
                     icon: "icon-dollar"
                 },
                 {
-                    name: "Shopping",
+                    name: "See Buyers",
                     icon: "icon-shopping-cart"
-                },
-                {
-                    name: "Taxi",
-                    icon: "icon-truck"
-                },
-                {
-                    name: "Doctor",
-                    icon: "icon-h-sign"
                 }
             ];
             $scope.map;
@@ -213,7 +193,10 @@ angular.module('sellApp', ['ngRoute', 'ngAnimate', 'AngularGM', 'ngResource', 't
                 });
             };
             $scope.selectedType = function(type) {
-
+                if (type.name === "See Buyers") {
+                    
+                    return;
+                }
                 if ($scope.type === undefined) {
                     $scope.types.unshift({
                         name: "Add",

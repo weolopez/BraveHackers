@@ -7,10 +7,11 @@ background: -ms-linear-gradient(top,  #323238 0%,#262626 100%); /* IE10+ */
 background: linear-gradient(to bottom,  #323238 0%,#262626 100%); /* W3C */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#323238', endColorstr='#262626',GradientType=0 ); /* IE6-9 */
 }
-h1 {margin:0 0 1em;}
+h1 {margin:0 0 1em; border-bottom: 2px solid #1c1c1c; padding-bottom: 0.5em;}
 a:hover {text-decoration:none;}
 section {padding:2em;}
 
+button, input[type="button"] {padding:0.5em 1.5em; margin-right:1em; border-radius: 5px; font-size:150%;}
 
 #app {position:relative; width:100%; height:100%;}
 #app section {height:100%; width:100%;}
@@ -26,8 +27,8 @@ section {padding:2em;}
 #tools {}
 #tools nav {width:75%; margin:0 auto; height:100%}
 #tools ul {margin:0; padding:0; list-style:none; height:100%;}
-#tools li {float:left; width:50%; height:25%; text-align:center;}
-#tools li a {padding:50% 0; display:block;}
+#tools li {float:left; width:50%; text-align:center;}
+#tools li a {padding:20% 0; display:block; background: rgba(255,255,255,0.1); margin: 0.5em; font-size: 200%; border-radius: 3px;}
 
 
 
@@ -36,6 +37,9 @@ section {padding:2em;}
 #icon-list ul li {padding:0.5em; text-align:center; font-size:100%;}
 #icon-list ul li i {font-size:200%;}
 #icon-list ul li span {display:block;}
+
+#crowds ul {list-style: none;}
+#crowds li {font-size:150%; margin:0.5em 0;}
 
 .pop {height:100%; width:100%; z-index:20; position:absolute; top:0; left:0; background:#d9f;}
 

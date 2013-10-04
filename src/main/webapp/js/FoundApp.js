@@ -1,7 +1,7 @@
 angular.module('foundApp', ['ngRoute', 'ngAnimate', 'AngularGM', 'ngResource', 'timer'])
         .config(['$routeProvider', function($routeProvider) {
                 $routeProvider.when('/geomap', {templateUrl: 'partials/geomap.html', controller: 'GeomapCtrl'});
-                $routeProvider.when('/editLine', {templateUrl: 'partials/editLine.html', controller: 'EditLineCtrl'});
+                $routeProvider.when('/editLine', {templateUrl: 'partials/editFind.html', controller: 'EditLineCtrl'});
                 $routeProvider.when('/editLineCount', {templateUrl: 'partials/editLineCount.html', controller: 'EditLineCountCtrl'});
                 $routeProvider.otherwise({redirectTo: '/geomap'});
             }])
@@ -52,32 +52,8 @@ angular.module('foundApp', ['ngRoute', 'ngAnimate', 'AngularGM', 'ngResource', '
         .controller('GeomapCtrl', function($scope, angulargmContainer, $http, $location, $rootScope) {
             $scope.types = [
                 {
-                    name: "beer",
-                    icon: "icon-beer"
-                },
-                {
-                    name: "toilet",
-                    icon: "icon-female"
-                },
-                {
-                    name: "food",
+                    name: "Found",
                     icon: "icon-archive"
-                },
-                {
-                    name: "ATM",
-                    icon: "icon-dollar"
-                },
-                {
-                    name: "Shopping",
-                    icon: "icon-shopping-cart"
-                },
-                {
-                    name: "Taxi",
-                    icon: "icon-truck"
-                },
-                {
-                    name: "Doctor",
-                    icon: "icon-h-sign"
                 }
             ];
             $scope.map;
