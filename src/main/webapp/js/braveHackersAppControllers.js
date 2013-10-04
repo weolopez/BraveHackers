@@ -3,7 +3,7 @@
 /* Controllers */
 
 angular.module('braveHackers.controllers', ['AngularGM', 'ngResource'])
-        
+
         .controller('HomeCtrl', function() {
         })
         .controller('MyCtrl1', function() {
@@ -25,37 +25,50 @@ angular.module('braveHackers.controllers', ['AngularGM', 'ngResource'])
                 map: {
                     center: new google.maps.LatLng($scope.lat, $scope.lng),
                     zoom: 21,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                    mapTypeId: google.maps.MapTypeId.SATELLITE 
                 },
                 marker: {
                     clickable: false,
                     draggable: true
                 }
             };
-
-            $scope.dropPin = function() {
             
-            	var dataToSend =  {lat: $scope.lat, lng: $scope.lng, type: "FINALLY", count:"3", vote:"8"};
+            $scope.getLines = function(type) {
+                var dataToSend = {};
                 $http({
-                	url: "/BraveHackers/crowds/lineService/addline", 
-                	method: "PUT",
-                	data: dataToSend
+                    url: "/BraveHackers/crowds/lineService/getlines",
+                    method: "GET",
+                    data: dataToSend
                 }).success(function(data) {
                     $scope.addPin(data);
                     console.log('success:' + data);
                 }).error(function(data) {
                     console.log('error:' + data);
-                    
                 });
-               
             }
+            
+            $scope.dropPin = function() {
 
-            $scope.addPin = function(pinID) {
+                var dataToSend = {lat: $scope.lat, lng: $scope.lng, type: "FINALLY", count: "3", vote: "8"};
+                $http({
+                    url: "/BraveHackers/crowds/lineService/addline",
+                    method: "PUT",
+                    data: dataToSend
+                }).success(function(data) {
+                    $scope.addPin(data, $scope.latP, $scope.lngP);
+                    console.log('success:' + data);
+                }).error(function(data) {
+                    console.log('error:' + data);
+                });
+
+            }
+                
+            $scope.addPin = function(pinID, lat, lng) {
                 $scope.houses.push({
                     name: pinID,
-                    lat: $scope.lat,
-                    lng: $scope.lng,
-                    //icon: 'spring-hot.png'
+                    lat: lat,
+                    lng: lng,
+                    options: 'img/favicon.png'
                 })
                 alert("Please Move Pin to the head of the line.");
             }
@@ -68,13 +81,17 @@ angular.module('braveHackers.controllers', ['AngularGM', 'ngResource'])
 
             var x = document.getElementById("demo");
 
-            $scope.lat = 46;
-            $scope.lng = -122;
+            $scope.lat;
+            $scope.lng;
 
+            $scope.latP;
+            $scope.lngP;
             function showPosition(position)
             {
-                $scope.lat = position.coords.latitude;
-                $scope.lng = position.coords.longitude;
+                $scope.latP = position.coords.latitude;
+                $scope.lngP = position.coords.longitude;
+                $scope.lat = $scope.latP;
+                $scope.lng = $scope.lngP;
                 $scope.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                 $scope.zoom = 19;
                 $scope.map = angulargmContainer.getMap('dragMarkerMap');
@@ -94,16 +111,17 @@ angular.module('braveHackers.controllers', ['AngularGM', 'ngResource'])
             }
 
 
-            $scope.houses = [{
-                    name: 'myHouse',
-                    lat: 46,
-                    lng: -122
-                }];
+            $scope.houses = [];
 
             $scope.setHouseLocation = function(house, marker) {
                 var position = marker.getPosition();
                 house.lat = position.lat();
                 house.lng = position.lng();
+                angular.forEach($scope.houses, function(value, key) {
+                    if (value.name === house.name) {
+                        console.log("foundit: " + house.name);
+                    }
+                });
             };
             $scope.clickDrag = function(e) {
                 var a = e;
