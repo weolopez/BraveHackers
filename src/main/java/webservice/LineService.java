@@ -106,11 +106,11 @@ public class LineService {
 	}
 
 	// $http.get("/BraveHackers/crowds/lineService/addSmiley",{params: {lineId: "1"}});
-
+	//$http.get("/BraveHackers/crowds/lineService/addSmiley",{params: {lineId: "1", count:"78"}});
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)	
 	@Path("/addSmiley")
-	public String addSmiley(@QueryParam("lineId" ) String lineId 
+	public String addSmiley(@QueryParam("lineId" ) String lineId , @QueryParam("count" ) String count
 		) {
 		int numSmileys = 0;
 		System.out.print("lineId---------" +lineId);		
@@ -118,6 +118,13 @@ public class LineService {
 		{
 			int lineIdInt = helper.getInt("lineId",lineId,false,0);
 			numSmileys = new AccessManager().addSmiley(lineIdInt);
+			if (count!=null & count.trim().length() !=0)
+			{
+				//count passed, update it
+				int countIdInt = helper.getInt("count",count,false,0);
+				System.out.print("updating count to ---------" +countIdInt);
+				new AccessManager().setNewLineCount(lineIdInt, countIdInt);
+			}
 			System.out.print("numSmileys---------" +numSmileys);
 		} catch (Exception e) {
 		}
