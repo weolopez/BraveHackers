@@ -1,7 +1,7 @@
 angular.module('buyApp', ['ngRoute', 'ngAnimate', 'AngularGM', 'ngResource', 'timer'])
         .config(['$routeProvider', function($routeProvider) {
                 $routeProvider.when('/geomap', {templateUrl: 'partials/geomap.html', controller: 'GeomapCtrl'});
-                $routeProvider.when('/editLine', {templateUrl: 'partials/editLine.html', controller: 'EditLineCtrl'});
+                $routeProvider.when('/editLine', {templateUrl: 'partials/editBuy.html', controller: 'EditLineCtrl'});
                 $routeProvider.when('/editLineCount', {templateUrl: 'partials/editLineCount.html', controller: 'EditLineCountCtrl'});
                 $routeProvider.otherwise({redirectTo: '/geomap'});
             }])
@@ -54,10 +54,6 @@ angular.module('buyApp', ['ngRoute', 'ngAnimate', 'AngularGM', 'ngResource', 'ti
                 {
                     name: "beer",
                     icon: "icon-beer"
-                },
-                {
-                    name: "toilet",
-                    icon: "icon-female"
                 },
                 {
                     name: "food",
@@ -214,30 +210,9 @@ angular.module('buyApp', ['ngRoute', 'ngAnimate', 'AngularGM', 'ngResource', 'ti
             };
             $scope.selectedType = function(type) {
 
-                if ($scope.type === undefined) {
-                    $scope.types.unshift({
-                        name: "Add",
-                        icon: "icon-plus"
-                    })
-                    $scope.type = type.name;
-                    return;
-                }
-
-                if (type.name === "Add")
+               $scope.type = type.name;
                     $scope.dropPin($scope.type);
-                else
-                    $scope.type = type.name;
-
-                if ($scope.pins === undefined)
-                    $scope.getLines();
-                else {
-                    //TODO ADD MORE PINS
-                }
-                /*     $('.add-new-marker').fadeOut().remove();
-                 $('li.active').removeClass('active');
-                 $(this).parent('li').addClass('active');
-                 $('#app').append('<a href="#" class="add-new-marker"><i class="icon-plus"></i> New Marker</a>');
-                 $('.add-new-marker').fadeIn();*/
+              
             }
             function success() {
                 console.log("SUCCESS");
