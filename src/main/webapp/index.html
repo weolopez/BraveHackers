@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html >
+<html ng-app>
     <head>
         <meta charset="UTF-8">
         <title>I Love Crowds</title>
@@ -22,7 +22,7 @@
                 <form action="">
                     <p><label for="username">Username: </label> <input type="text" id="username"></p>
                     <p><label for="password">Password: </label> <input type="password" id="password"></p>
-                    <p><input type="submit" value="Login"></p>
+                    <p><input type="button" id="authuser"   value="Login"></p>                   
                 </form>
             </section>
 
@@ -85,7 +85,26 @@
                     e.preventDefault();
                     $('#app').append('<div class="pop">New Pop Up Div</div>');
 
-                });
+                });                
+            });
+            
+            $(document).ready(function() {
+            	$('#authuser').click(function() {
+                    
+            		$.ajax( {     	 		       
+     	 		 	   url:"http://localhost:8080/BraveHackers/crowds/userService/addUser",
+     	 		 	   contentType: 'application/x-www-form-urlencoded', 
+     	 		       type:"PUT",
+     	 		       async:true,
+     	 		        //data: [{name: "userName", value: $scope.username},{name: "password", value: $scope.password},{name: "firstName", value: "test"}, {name: "lastName", value: "test"}, {name: "authMethod", value: "username"}, {name: "lat", value: "20.1515113"}, {name: "lng", value: "22.1515113"} ],
+     	 		       data: [{name: "userName", value: "eeeeee"},{name: "password", value: "eeee"},{name: "firstName", value: "test"}, {name: "lastName", value: "test"}, {name: "authMethod", value: "username"}, {name: "lat", value: "20.1515113"}, {name: "lng", value: "22.1515113"} ],
+     	 		       success:function ( result ) {
+     	 		    	   //alert(result);
+     	 		    	 	document.location.href="http://localhost:8080/BraveHackers/#tools";
+     	 		       }
+     	 		    } );
+
+                }); 
             });
         </script>
     </body>

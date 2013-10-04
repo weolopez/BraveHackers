@@ -5,6 +5,7 @@
 angular.module('braveHackers.controllers', ['AngularGM', 'ngResource'])
 
         .controller('HomeCtrl', function() {
+        	$scope.hello = 'hello world';
         })
         .controller('MyCtrl1', function() {
         })
