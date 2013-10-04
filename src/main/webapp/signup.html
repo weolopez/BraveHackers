@@ -9,46 +9,18 @@
     </head>
     <body>
         <div id="app" ng-controller="HomeCtrl">
-            <section id="splash">
-                <nav id="splash-screen">
-                    <p><a href="#login">I</a></p>
-                    <p><a href="#tools" title="Love" class="heart"><i class="icon-heart"></i></a></p>
-                    <p><a href="#crowds">Crowds</a></p>
-                </nav>
-            </section>
-
-            <section id="login">
+            
+			
+			<section id="signup">
                 <h1>Login</h1>
                 <form action="">
                     <p><label for="username">Username: </label> <input type="text" id="username"></p>
                     <p><label for="password">Password: </label> <input type="password" id="password"></p>
-                    <p><input type="button" id="authuser"   value="Login"></p>     
-                    <a href="signup.html">Sign up? </a>              
-                </form>
-            </section> 
+                    <p><input type="button" id="signupuser"   value="Login"></p>
+                </form>                
+            </section>
             
-            <section id="tools">
-                <h1>Tools to Make Crowds Fun</h1>
-                <nav>
-                    <ul class="clearfix">
-                        <li><a href="Lines.html">I Love Lines</a></li>
-                        <li><a href="Sellers.html">Sellers</a></li>
-                        <li><a href="Buyers.html">Buyers</a></li>
-                        <li><a href="Lost.html">Lost</a></li>
-                        <li><a href="Found.html">Found</a></li>
-                        <li><a href="Graffitti.html">Graffitti</a></li>
-                    </ul>
-                </nav>
-            </section>
-
-            <section id="crowds">
-                <h1>Crowds Near You</h1>
-                <ul>
-                    <li><a href="maps.html">Crowd #1</a></li>
-                    <li><a href="maps.html">Crowd #2</a></li>
-                    <li><a href="maps.html">Crowd #3</a></li>
-                </ul>
-            </section>
+            
 
         </div>
 
@@ -90,17 +62,21 @@
             });
             
             $(document).ready(function() {
-            	$('#authuser').click(function() {
+            	$('#signupuser').click(function() {
                     
+            		var dataToSend = {userName: "eeeeee", password: "tetsing", firstName: "firstName", lastName: "lastName", authMethod: "authMethod", lat: "20.1515113", lng: "20.1515113" };
+            		 
             		$.ajax( {     	 		       
      	 		 	   url:"/BraveHackers/crowds/userService/addUser",
      	 		 	   contentType: 'application/x-www-form-urlencoded', 
      	 		       type:"PUT",
      	 		       async:true,
+     	 		       dataType: 'json',
      	 		        //data: [{name: "userName", value: $scope.username},{name: "password", value: $scope.password},{name: "firstName", value: "test"}, {name: "lastName", value: "test"}, {name: "authMethod", value: "username"}, {name: "lat", value: "20.1515113"}, {name: "lng", value: "22.1515113"} ],
      	 		       data: [{name: "userName", value: "eeeeee"},{name: "password", value: "eeee"},{name: "firstName", value: "test"}, {name: "lastName", value: "test"}, {name: "authMethod", value: "username"}, {name: "lat", value: "20.1515113"}, {name: "lng", value: "22.1515113"} ],
+     	 		       //data: dataToSend,
      	 		       success:function ( result ) {
-     	 		    	   //alert(result);
+     	 		    	    //alert(result);
      	 		    	 	document.location.href="http://localhost:8080/BraveHackers/#tools";
      	 		       }
      	 		    } );
