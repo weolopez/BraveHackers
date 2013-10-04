@@ -29,7 +29,7 @@ angular.module('myApp.controllers', ['AngularGM', 'ngDragDrop']).
  		       //url:"${pageContext.request.contextPath}/services/jsonrest/prepop",
  		 	   //url:"http://localhost:8080/BraveHackers/crowds/userService/addUser?firstName=ram&lastName=ram&password=23eadsas&lat=56.12121212&lng=12.121212&authMethod=czx&userName=zxczxzxc",   
  		 	   
- 		 	   url:"http://localhost:8080/BraveHackers/crowds/userService/addUser",
+ 		 	   url:"/BraveHackers/crowds/userService/addUser",
  		 	   contentType: 'application/x-www-form-urlencoded', 
  		       type:"PUT",
  		       async:true,

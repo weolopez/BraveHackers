@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html ng-app>
+    <head>
+        <meta charset="UTF-8">
+        <title>I Love Crowds</title>
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+        <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="css/homeApp.css">
+    </head>
+    <body>
+        <div id="app" ng-controller="HomeCtrl">
+            
+			
+			<section id="signup">
+                <h1>Login</h1>
+                <form action="">
+                    <p><label for="username">Username: </label> <input type="text" id="username"></p>
+                    <p><label for="password">Password: </label> <input type="password" id="password"></p>
+                    <p><input type="button" id="signupuser"   value="Login"></p>
+                </form>                
+            </section>
+            
+            
+
+        </div>
+
+        <script src="lib/jquery/jquery.js"></script>
+        <script src="//maps.googleapis.com/maps/api/js?sensor=false"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+        <script src="lib/angular/angular1.2.js"></script>
+        <script src="lib/angular/angular-animate1.2.js"></script>
+        <script src="lib/angular/angular-route1.2.js"></script>
+        <script src="lib/angular/angular-resource1.2.js"></script>
+        <script src="lib/ng-grid/ng-grid-2.0.7.debug.js"></script>
+        <script src="lib/bootstrap/ui-bootstrap-tpls-0.5.0.js"></script>  
+        <script src="lib/mongolabResourceHttp/mongolabResourceHttp.js"></script>
+        <script src="lib/bootstrap/bootstrap3.0.min.js"></script>
+        <script src="lib/angular/angular-dragdrop.js"></script>
+        <script src="//angulargm.herokuapp.com/angular-gm-0.3.0.min.js"></script>
+        <script src="js/braveHackersApp.js"></script>
+        <script src="js/braveHackersAppServices.js"></script>
+        <script src="js/braveHackersAppControllers.js"></script>
+        <script src="js/braveHackersAppFilters.js"></script>
+        <script src="js/braveHackersAppDirectives.js"></script>
+        <script>
+            $(document).ready(function() {
+                var dWidth = $(window).outerWidth(true),
+                        dHeight = $(window).outerHeight(true);
+
+                //alert(dWidth + " x " + dHeight);
+
+                $('#splash-screen').find('a').each(function(i) {
+                    $(this).delay(i * 400).fadeIn();
+                });
+
+
+                $('#popup').click(function(e) {
+                    e.preventDefault();
+                    $('#app').append('<div class="pop">New Pop Up Div</div>');
+
+                });                
+            });
+            
+            $(document).ready(function() {
+            	$('#signupuser').click(function() {
+                    
+            		var dataToSend = {userName: "eeeeee", password: "tetsing", firstName: "firstName", lastName: "lastName", authMethod: "authMethod", lat: "20.1515113", lng: "20.1515113" };
+            		 
+            		$.ajax( {     	 		       
+     	 		 	   url:"/BraveHackers/crowds/userService/addUser",
+     	 		 	   contentType: 'application/x-www-form-urlencoded', 
+     	 		       type:"PUT",
+     	 		       async:true,
+     	 		       dataType: 'json',
+     	 		        //data: [{name: "userName", value: $scope.username},{name: "password", value: $scope.password},{name: "firstName", value: "test"}, {name: "lastName", value: "test"}, {name: "authMethod", value: "username"}, {name: "lat", value: "20.1515113"}, {name: "lng", value: "22.1515113"} ],
+     	 		       data: [{name: "userName", value: "eeeeee"},{name: "password", value: "eeee"},{name: "firstName", value: "test"}, {name: "lastName", value: "test"}, {name: "authMethod", value: "username"}, {name: "lat", value: "20.1515113"}, {name: "lng", value: "22.1515113"} ],
+     	 		       //data: dataToSend,
+     	 		       success:function ( result ) {
+     	 		    	    //alert(result);
+     	 		    	 	document.location.href="http://localhost:8080/BraveHackers/#tools";
+     	 		       }
+     	 		    } );
+
+                }); 
+            });
+        </script>
+    </body>
+</html>

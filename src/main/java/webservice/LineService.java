@@ -7,15 +7,18 @@ import java.lang.Integer;
   
 
 
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import json.JsonLine;
 import model.AccessManager;
+import dto.Acknowledgement;
 import dto.Line;
 
 
@@ -71,6 +74,81 @@ public class LineService {
 		System.out.print("lineId: " +lineId);			
 		return Integer.toString(lineId);
 		 
+	}
+	
+	
+	// $http.get("/BraveHackers/crowds/lineService/updateLineLocation",{params: {lineId: "1", lat:"56.656576565",lng:"23.43244242"}});
+
+	@GET
+	@Produces("application/json")
+	@Path("/updateLineLocation")
+	public Acknowledgement updateLineLocation(@QueryParam("lineId" ) String lineId , @QueryParam("lat" ) String inlat , 
+			@QueryParam("lng" ) String inlng 
+		) {
+		System.out.print("lineId---------" +lineId);
+		System.out.print("inlat---------" +inlat);
+		System.out.print("inlng---------" +inlng);
+	
+		Acknowledgement ack = new Acknowledgement();
+		ack.setSuccess(false);		
+		try
+		{
+			double lat = helper.getDouble("lat",inlat,false,0);
+			double lng = helper.getDouble("lng",inlng,false,0);
+			int lineIdInt = helper.getInt("lineId",lineId,false,0);
+			new AccessManager().updateLineLocation(lineIdInt,lat,lng);
+			ack.setSuccess(true);
+		} catch (Exception e) {
+			ack.setReason(e.getMessage());
+		}
+		return ack;
+		
+	}
+
+	// $http.get("/BraveHackers/crowds/lineService/addSmiley",{params: {lineId: "1"}});
+
+	@GET
+	@Produces(MediaType.TEXT_PLAIN)	
+	@Path("/addSmiley")
+	public String addSmiley(@QueryParam("lineId" ) String lineId 
+		) {
+		int numSmileys = 0;
+		System.out.print("lineId---------" +lineId);		
+		try
+		{
+			int lineIdInt = helper.getInt("lineId",lineId,false,0);
+			numSmileys = new AccessManager().addSmiley(lineIdInt);
+			System.out.print("numSmileys---------" +numSmileys);
+		} catch (Exception e) {
+		}
+		return Integer.toString(numSmileys);
+		
+	}
+	
+	// $http.get("/BraveHackers/crowds/lineService/setNewLineCount",{params: {lineId: "1", count: "40"}});
+
+	@GET
+	@Produces("application/json")
+	@Path("/setNewLineCount")
+	public Acknowledgement setNewLineCount(@QueryParam("lineId" ) String lineId, @QueryParam("count" ) String count 
+		) {
+		
+		int numSmileys = 0;
+		System.out.print("lineId---------" +lineId);
+		System.out.print("count---------" +count);
+		Acknowledgement ack = new Acknowledgement();
+		ack.setSuccess(false);		
+		try
+		{
+			int lineIdInt = helper.getInt("lineId",lineId,false,0);
+			int countIdInt = helper.getInt("count",count,false,0);
+			new AccessManager().setNewLineCount(lineIdInt, countIdInt);
+			ack.setSuccess(true);
+		} catch (Exception e) {
+			ack.setReason(e.getMessage());
+		}
+		return ack;
+		
 	}
 
 

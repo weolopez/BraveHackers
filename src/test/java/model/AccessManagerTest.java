@@ -11,7 +11,9 @@ import org.junit.Test;
 import dao.Access;
 import dao.Database;
 import dto.Buyer;
+import dto.Line;
 import dto.Product;
+import dto.User;
 
 @Ignore 
 public class AccessManagerTest {
@@ -67,12 +69,53 @@ public class AccessManagerTest {
 	}
 	
 	@Test
-	public void testIGot() throws Exception {
-		new AccessManager().iWant(1, "Milkshake", 1);
+	public void testGetLine() throws Exception {
+		Line line = new AccessManager().getLine(1);
+		System.out.println("line: " + line.toString());
 		Assert.assertTrue(true);
-		new AccessManager().iGot(1, "Milkshake");
+	}
+	
+	@Test
+	public void testAddLine() throws Exception {
+		Line line = new Line();
+		line.setCount(4);
+		line.setLat(56.56785858765);
+		line.setLng(34.354353343244);
+		int lineid = new AccessManager().addLine(line);
+		System.out.println("lineid: " + lineid);
 		Assert.assertTrue(true);
-		new AccessManager().iWant(1, "Milkshake", 1);
+	}
+	@Test
+	public void testAddSmiley() throws Exception {
+		Line line = new Line();
+		line.setCount(4);
+		line.setLat(56.56785858765);
+		line.setLng(34.354353343244);
+		int lineid = new AccessManager().addLine(line);
+		int votes = new AccessManager().addSmiley(lineid);
+		Assert.assertTrue(votes == 1);
+	}
+	
+	@Test
+	public void testSetNewLineCounty() throws Exception {
+		Line line = new Line();
+		line.setCount(4);
+		line.setLat(56.56785858765);
+		line.setLng(34.354353343244);
+		int lineid = new AccessManager().addLine(line);
+		new AccessManager().setNewLineCount(lineid, 200);
+		Line oldLine = new AccessManager().getLine(lineid);
+		Assert.assertTrue(oldLine.getCount() == 200);
+	}
+	
+	@Test
+	public void testUpdateLineLocation() throws Exception {
+		Line line = new Line();
+		line.setCount(5);
+		line.setLat(56.56785858765);
+		line.setLng(34.354353343244);
+		int lineid = new AccessManager().addLine(line);
+		new AccessManager().updateLineLocation(lineid, 45.3433353,67.758757575);
 		Assert.assertTrue(true);
 	}
 }

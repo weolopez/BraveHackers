@@ -2,6 +2,7 @@ package webservice;
 
 import java.util.ArrayList;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
@@ -11,8 +12,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import json.JsonLine;
+
+import model.AccessManager;
 import model.UserManager;
 import dto.Acknowledgement;
+import dto.Line;
 import dto.User;
 import helper.CrowdHelper;
 
@@ -75,6 +80,29 @@ public class UserService {
 	}
 	
 
+	@PUT	
+	@Path("/addUserj")
+	@Consumes("application/json")
+	@Produces(MediaType.TEXT_PLAIN)	
+	public String addline(JsonLine jsonLine
+			) {
+		int lineId = 0;
+		Line line = new Line();
+		 	
+		try
+		{
+			System.out.print("lat---------" +jsonLine.getLat());
+			System.out.print("lng---------" +jsonLine.getLng());
+			 
+			 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.print("lineId: " +lineId);			
+		return Integer.toString(lineId);
+		 
+	}
+	
 	
 	@GET
 	@Produces("application/json")
