@@ -3,24 +3,14 @@
         <gm-markers gm-objects="houses"
                     gm-get-lat-lng="{ lat: object.lat, lng: object.lng}"
                     gm-get-marker-options="options.marker"
-                    gm-on-dragend="setHouseLocation(object, marker)">
-
+                    gm-on-dragend="setHouseLocation(object, marker)"
+                    gm-on-click="getInfo(object, marker)">
         </gm-markers>
     </gm-map> 
 
     <nav id="icon-list">
-        <ul class="clearfix">
-            <li><a ng-click="dropPin()"><i class="icon-male"></i><i class="icon-female"></i> <span>Restrooms</span></a></li>
-            <li><a ng-click="getLines('food')"><i class="icon-archive"></i> <span>Lost &amp; Found</span></a></li>
-            <li><a href="#/geomap"><i class="icon-male"></i><i class="icon-female"></i> <span>Restrooms</span></a></li>
-            <li><a href="#"><i class="icon-archive"></i> <span>Lost &amp; Found</span></a></li>
-            <li><a href="#"><i class="icon-male"></i><i class="icon-female"></i> <span>Restrooms</span></a></li>
-            <li><a href="#"><i class="icon-archive"></i> <span>Lost &amp; Found</span></a></li>
-            <li><a href="#"><i class="icon-male"></i><i class="icon-female"></i> <span>Restrooms</span></a></li>
-            <li><a href="#"><i class="icon-archive"></i> <span>Lost &amp; Found</span></a></li>
-            <li><a href="#"><i class="icon-male"></i><i class="icon-female"></i> <span>Restrooms</span></a></li>
-            <li><a href="#"><i class="icon-archive"></i> <span>Lost &amp; Found</span></a></li>
-            <li><a href="#"><i class="icon-male"></i><i class="icon-female"></i> <span>Restrooms</span></a></li>
+        <ul class="clearfix" >            
+            <li ng-repeat="type in types"><a ng-click="selectedType(type)"><i ng-class="type.icon"></i> <span>{{type.name}}</span></a></li>
         </ul>
     </nav>
 

@@ -17,9 +17,36 @@ angular.module('braveHackers.controllers', ['AngularGM', 'ngResource'])
         })
         .controller('MyCtrl3', function() {
         })
-        .controller('MyCtrl4', function() {
+        .controller('EditLineCtrl', function($scope, $http, $location,$rootScope) {
+            $scope.pin = $rootScope.selectedPin;
+    
+            $scope.editLine = function() {
+                alert("clicked submit");
+                $location.url("/editLineCount");
+            }
         })
-        .controller('GeomapCtrl', function($scope, angulargmContainer, $http) {
+        .controller('EditLineCountCtrl', function($scope, $http, $location,$rootScope) {
+            $scope.pin = $rootScope.selectedPin;
+    
+            $scope.reduceLine = function() {
+                alert("EditLineCountCtrl");
+            }
+        })
+        .controller('GeomapCtrl', function($scope, angulargmContainer, $http, $location,$rootScope) {
+            $scope.types = [
+                {
+                    name: "beer",
+                    icon: "icon-male"
+                },
+                {
+                    name: "toilet",
+                    icon: "icon-female"
+                },
+                {
+                    name: "food",
+                    icon: "icon-archive"
+                }
+            ];
             $scope.map;
             $scope.options = {
                 map: {
@@ -33,29 +60,32 @@ angular.module('braveHackers.controllers', ['AngularGM', 'ngResource'])
                 }
             };
 
-            $scope.getLines = function(type) {
+            $scope.getLines = function() {
                 var dataToSend = {};
                 $http({
                     url: "/BraveHackers/crowds/lineService/getlines",
                     method: "GET",
                     data: dataToSend
                 }).success(function(data) {
-                    $scope.addPins(data);
-            //        console.log('success:' + data);
+                    $scope.pins = data;
+                    $scope.addPins();
                 }).error(function(data) {
-          //          console.log('error:' + data);
+                    console.log('error:' + data);
                 });
             }
 
-            $scope.dropPin = function() {
+            $scope.dropPin = function(type) {
 
-                var dataToSend = {lat: $scope.lat, lng: $scope.lng, type: "FINALLY", count: "3", vote: "8"};
+                var dataToSend = {lat: $scope.lat, lng: $scope.lng, type: type, count: "3", vote: "1"};
                 $http({
                     url: "/BraveHackers/crowds/lineService/addline",
                     method: "PUT",
                     data: dataToSend
-                }).success(function(data) {
-                    $scope.addPin(data);
+                }).success(function(data, status, success, requestObject) {
+                    var dataToSend = requestObject.data;
+                    dataToSend.id=data;
+                    $scope.pins.push(dataToSend);
+                    $scope.addPin(dataToSend);
                     console.log('success:' + data);
                 }).error(function(data) {
                     console.log('error:' + data);
@@ -63,8 +93,8 @@ angular.module('braveHackers.controllers', ['AngularGM', 'ngResource'])
 
             }
 
-            $scope.addPins = function(pins) {
-                angular.forEach(pins, function(value) {
+            $scope.addPins = function() {
+                angular.forEach($scope.pins, function(value) {
                     $scope.houses.push({
                         name: value.id,
                         lat: value.lat,
@@ -76,21 +106,19 @@ angular.module('braveHackers.controllers', ['AngularGM', 'ngResource'])
                 })
             }
 
-            $scope.addPin = function(pinID) {
+            $scope.addPin = function(dataToSend) {
+                console.log('$scope.lat:' + $scope.lat);
+                console.log('$scope.lng:' + $scope.lng);
                 $scope.houses.push({
-                    name: pinID,
-                    lat: $scope.lat,
-                    lng: $scope.lng,
-                    options: 'img/favicon.png'
+                    name: dataToSend.id,
+                    lat: dataToSend.lat,
+                    lng: dataToSend.lng,
+                    options: {
+                        icon: dataToSend.type
+                    }
                 })
-                alert("Please Move Pin to the head of the line.");
+                alert("Please Move Pin to the head of the line."+pinID);
             }
-
-            $scope.$watch('location', function(newVal) {
-                if (newVal !== undefined)
-                    console.log('newPointlat:' + newVal.lat + ' lng:' + newVal.lng);
-            });
-
 
             var x = document.getElementById("demo");
 
@@ -125,20 +153,59 @@ angular.module('braveHackers.controllers', ['AngularGM', 'ngResource'])
 
 
             $scope.houses = [];
+            $scope.getInfo = function(house, marker) {
+                    console.log("looking for marker: " + house.name );
+                
+                angular.forEach($scope.pins, function(value, key) {
+                    console.log("looking: " + house.name +"and"+value.id);
+                   if (value.id === house.name) {
+                       alert("found it:"+house.name);
+                        console.log("foundit: " + house.name);
+                       $rootScope.selectedPin = value;
+                       $location.url("/editLine");
+                   }
+                });
+               
+            }
 
             $scope.setHouseLocation = function(house, marker) {
                 var position = marker.getPosition();
                 house.lat = position.lat();
                 house.lng = position.lng();
+
                 angular.forEach($scope.houses, function(value, key) {
                     if (value.name === house.name) {
                         console.log("foundit: " + house.name);
                     }
                 });
             };
-            $scope.clickDrag = function(e) {
-                var a = e;
+            $scope.selectedType = function(type) {
+               
+                if ($scope.type === undefined) {
+                    $scope.types.unshift({
+                        name: "Add",
+                        icon: "icon-plus"
+                    })
+                }
+                
+                 if (type.name === "Add")
+                    $scope.dropPin(type.icon);
+                else
+                    $scope.type = type.icon;
+                
+                if ($scope.pins === undefined)
+                    $scope.getLines();
+                else {
+                    //TODO ADD MORE PINS
+                }
+                /*     $('.add-new-marker').fadeOut().remove();
+                 $('li.active').removeClass('active');
+                 $(this).parent('li').addClass('active');
+                 $('#app').append('<a href="#" class="add-new-marker"><i class="icon-plus"></i> New Marker</a>');
+                 $('.add-new-marker').fadeIn();*/
             }
-
+            function success() {
+                console.log("SUCCESS");
+            }
         })
         ;
