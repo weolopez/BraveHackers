@@ -1,5 +1,5 @@
 <div style="width: 100%;height: 100%;">    
     <p><h1>{{pin.count}}</h1></p>
     <p><a ng-click="reduceLine()" title="reduce" class="heart"><i class="icon-heart"></i></a></p>
-    <p><timer interval="1000" countdown="pin.count * 3 * 60"/> seconds</p>    
+    <p>only <timer interval="1000" countdown="pin.count * 180">{{seconds}}</timer> more seconds to go!</p>    
 </div>
