@@ -25,14 +25,14 @@ angular.module('braveHackers.controllers', ['AngularGM', 'ngResource'])
                 map: {
                     center: new google.maps.LatLng($scope.lat, $scope.lng),
                     zoom: 21,
-                    mapTypeId: google.maps.MapTypeId.SATELLITE 
+                    mapTypeId: google.maps.MapTypeId.SATELLITE
                 },
                 marker: {
                     clickable: false,
                     draggable: true
                 }
             };
-            
+
             $scope.getLines = function(type) {
                 var dataToSend = {};
                 $http({
@@ -40,13 +40,13 @@ angular.module('braveHackers.controllers', ['AngularGM', 'ngResource'])
                     method: "GET",
                     data: dataToSend
                 }).success(function(data) {
-                    $scope.addPin(data);
-                    console.log('success:' + data);
+                    $scope.addPins(data);
+            //        console.log('success:' + data);
                 }).error(function(data) {
-                    console.log('error:' + data);
+          //          console.log('error:' + data);
                 });
             }
-            
+
             $scope.dropPin = function() {
 
                 var dataToSend = {lat: $scope.lat, lng: $scope.lng, type: "FINALLY", count: "3", vote: "8"};
@@ -55,19 +55,32 @@ angular.module('braveHackers.controllers', ['AngularGM', 'ngResource'])
                     method: "PUT",
                     data: dataToSend
                 }).success(function(data) {
-                    $scope.addPin(data, $scope.latP, $scope.lngP);
+                    $scope.addPin(data);
                     console.log('success:' + data);
                 }).error(function(data) {
                     console.log('error:' + data);
                 });
 
             }
-                
-            $scope.addPin = function(pinID, lat, lng) {
+
+            $scope.addPins = function(pins) {
+                angular.forEach(pins, function(value) {
+                    $scope.houses.push({
+                        name: value.id,
+                        lat: value.lat,
+                        lng: value.lng,
+                        options: {
+                            icon: 'img/favicon.png'
+                        }
+                    })
+                })
+            }
+
+            $scope.addPin = function(pinID) {
                 $scope.houses.push({
                     name: pinID,
-                    lat: lat,
-                    lng: lng,
+                    lat: $scope.lat,
+                    lng: $scope.lng,
                     options: 'img/favicon.png'
                 })
                 alert("Please Move Pin to the head of the line.");
@@ -129,4 +142,3 @@ angular.module('braveHackers.controllers', ['AngularGM', 'ngResource'])
 
         })
         ;
-
