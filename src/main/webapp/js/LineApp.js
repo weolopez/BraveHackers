@@ -213,7 +213,7 @@ angular.module('lineApp', ['ngRoute', 'ngAnimate', 'AngularGM', 'ngResource', 't
                 });
             };
             $scope.selectedType = function(type) {
-
+                
                 if ($scope.type === undefined) {
                     $scope.types.unshift({
                         name: "Add",
@@ -238,7 +238,7 @@ angular.module('lineApp', ['ngRoute', 'ngAnimate', 'AngularGM', 'ngResource', 't
                  $(this).parent('li').addClass('active');
                  $('#app').append('<a href="#" class="add-new-marker"><i class="icon-plus"></i> New Marker</a>');
                  $('.add-new-marker').fadeIn();*/
-            }
+            };
             function success() {
                 console.log("SUCCESS");
             }

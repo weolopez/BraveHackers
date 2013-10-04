@@ -52,32 +52,8 @@ angular.module('graffitiApp', ['ngRoute', 'ngAnimate', 'AngularGM', 'ngResource'
         .controller('GeomapCtrl', function($scope, angulargmContainer, $http, $location, $rootScope) {
             $scope.types = [
                 {
-                    name: "beer",
-                    icon: "icon-beer"
-                },
-                {
-                    name: "toilet",
-                    icon: "icon-female"
-                },
-                {
-                    name: "food",
-                    icon: "icon-archive"
-                },
-                {
-                    name: "ATM",
-                    icon: "icon-dollar"
-                },
-                {
-                    name: "Shopping",
-                    icon: "icon-shopping-cart"
-                },
-                {
-                    name: "Taxi",
-                    icon: "icon-truck"
-                },
-                {
-                    name: "Doctor",
-                    icon: "icon-h-sign"
+                    name: "Add Graffiti",
+                    icon: "icon-xing"
                 }
             ];
             $scope.map;
