@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:ng="http://angularjs.org">
+<html xmlns:ng="http://angularjs.org" ng-app>
 
 <script src="lib/angular/angular1.2.js" ng:autobind></script>
 <script type="text/javascript">
-function SellersController() {
-	var scope = this;
-	scope.list = [{name:"Item1"},{name:"Item2"},{name:"Item3"},{name:"Item4"}];
+function SellersController($scope) {
+	$scope.list = [{name:"Item1"},{name:"Item2"},{name:"Item3"},{name:"Item4"}];
 }
 </script>
 
