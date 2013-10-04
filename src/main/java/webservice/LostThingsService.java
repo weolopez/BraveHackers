@@ -31,8 +31,8 @@ public class LostThingsService {
 		return lostList;
 	}
 	
-	/*@GET
-	@Path("/getAllLostThings")
+	@GET
+	@Path("/getLostThing")
 	@Produces("application/json")
 	public LostThing getLostThing(@QueryParam("id" ) String strid) {
 		LostThing lostThing = new LostThing();
@@ -43,8 +43,9 @@ public class LostThingsService {
 			e.printStackTrace();
 		}
 		return lostThing;
-	}*/
+	}
 	
+	//returns id of lost thing
 	@PUT	
 	@Path("/addLostThing")
 	@Consumes("application/json")
@@ -68,8 +69,9 @@ public class LostThingsService {
 		 
 	}
 	
+	//returns userid of the found thing
 	@GET
-	@Produces("application/json")
+	@Produces(MediaType.TEXT_PLAIN)	
 	@Path("/foundSomething")
 	public String foundSomething( @QueryParam("id" ) String id 
 		) {
