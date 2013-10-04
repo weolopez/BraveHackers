@@ -6,6 +6,10 @@
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
         <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="css/homeApp.css">
+
+        <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     </head>
     <body>
         <div id="app" ng-controller="HomeCtrl">
@@ -26,7 +30,7 @@
                     <a href="signup.html">Sign up? </a>              
                 </form>
             </section> 
-            
+
             <section id="tools">
                 <h1>Tools to Make Crowds Fun</h1>
                 <nav>
@@ -86,26 +90,26 @@
                     e.preventDefault();
                     $('#app').append('<div class="pop">New Pop Up Div</div>');
 
-                });                
+                });
             });
-            
-            $(document).ready(function() {
-            	$('#authuser').click(function() {
-                    
-            		$.ajax( {     	 		       
-     	 		 	   url:"/BraveHackers/crowds/userService/addUser",
-     	 		 	   contentType: 'application/x-www-form-urlencoded', 
-     	 		       type:"PUT",
-     	 		       async:true,
-     	 		        //data: [{name: "userName", value: $scope.username},{name: "password", value: $scope.password},{name: "firstName", value: "test"}, {name: "lastName", value: "test"}, {name: "authMethod", value: "username"}, {name: "lat", value: "20.1515113"}, {name: "lng", value: "22.1515113"} ],
-     	 		       data: [{name: "userName", value: "eeeeee"},{name: "password", value: "eeee"},{name: "firstName", value: "test"}, {name: "lastName", value: "test"}, {name: "authMethod", value: "username"}, {name: "lat", value: "20.1515113"}, {name: "lng", value: "22.1515113"} ],
-     	 		       success:function ( result ) {
-     	 		    	   //alert(result);
-     	 		    	 	document.location.href="http://localhost:8080/BraveHackers/#tools";
-     	 		       }
-     	 		    } );
 
-                }); 
+            $(document).ready(function() {
+                $('#authuser').click(function() {
+
+                    $.ajax({
+                        url: "/BraveHackers/crowds/userService/addUser",
+                        contentType: 'application/x-www-form-urlencoded',
+                        type: "PUT",
+                        async: true,
+                        //data: [{name: "userName", value: $scope.username},{name: "password", value: $scope.password},{name: "firstName", value: "test"}, {name: "lastName", value: "test"}, {name: "authMethod", value: "username"}, {name: "lat", value: "20.1515113"}, {name: "lng", value: "22.1515113"} ],
+                        data: [{name: "userName", value: "eeeeee"}, {name: "password", value: "eeee"}, {name: "firstName", value: "test"}, {name: "lastName", value: "test"}, {name: "authMethod", value: "username"}, {name: "lat", value: "20.1515113"}, {name: "lng", value: "22.1515113"}],
+                        success: function(result) {
+                            //alert(result);
+                            document.location.href = "http://localhost:8080/BraveHackers/#tools";
+                        }
+                    });
+
+                });
             });
         </script>
     </body>
