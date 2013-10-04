@@ -76,6 +76,9 @@ public class LineService {
 		 
 	}
 	
+	
+	// $http.get("/BraveHackers/crowds/lineService/updateLineLocation",{params: {lineId: "1", lat:"56.656576565",lng:"23.43244242"}});
+
 	@GET
 	@Produces("application/json")
 	@Path("/updateLineLocation")
