@@ -1,8 +1,12 @@
 package webservice;
 
+import helper.CrowdHelper;
+
 import java.util.ArrayList;
 import java.lang.Integer;
   
+
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -10,6 +14,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import json.JsonLine;
 import model.AccessManager;
 import dto.Line;
 
@@ -17,17 +22,22 @@ import dto.Line;
 @Path("/lineService")
 public class LineService {
 	
+	private CrowdHelper helper = new CrowdHelper();
 	
 	@GET
 	@Path("/getlines")
 	@Produces("application/json")
 	public ArrayList<Line> getlines() {
-		String lines = null;
+		System.out.print("calling getlines");
 		ArrayList<Line> lineList = new ArrayList<Line>();
 		try {
 			lineList = new AccessManager().getLines();
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		for (Line line:lineList)
+		{
+			System.out.print(line.toString());
 		}
 		return lineList;
 	}
@@ -37,20 +47,24 @@ public class LineService {
 	@Path("/addline")
 	@Consumes("application/json")
 	@Produces(MediaType.TEXT_PLAIN)	
-	public String addline(Line line
+	public String addline(JsonLine jsonLine
 			) {
 		int lineId = 0;
+		Line line = new Line();
 		 	
 		try
 		{
-			System.out.print("lat---------" +line.getLat());
-			System.out.print("lng---------" +line.getLng());
-			System.out.print("type---------" +line.getType());
-			System.out.print("count---------" +line.getCount());
-			System.out.print("vote---------" +line.getVote());
-		
-		 
-		 lineId = new AccessManager().addLine(line);
+			System.out.print("lat---------" +jsonLine.getLat());
+			System.out.print("lng---------" +jsonLine.getLng());
+			System.out.print("type---------" +jsonLine.getType());
+			System.out.print("count---------" +jsonLine.getCount());
+			System.out.print("vote---------" +jsonLine.getVote());
+			line.setType(jsonLine.getType());
+			line.setCount(helper.getInt("count",jsonLine.getCount(),false,0));
+			line.setLat(helper.getDouble("lat",jsonLine.getLat(),false,0));
+			line.setLng(helper.getDouble("lng",jsonLine.getLng(),false,0));
+			System.out.print("line added to DB: " +line.toString());
+			lineId = new AccessManager().addLine(line);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

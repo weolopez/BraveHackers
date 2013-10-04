@@ -16,15 +16,32 @@ import dto.Product;
 import dto.Seller;
 
 
+
 public class Access {
 	
 	private final Logger logger = Logger.getLogger(getClass().getName());
 	
+	public Line getLine(int id, Connection con) throws SQLException {
+		ArrayList<Line> lines = getLines(id,con);
+		if (lines.size()>0)
+			return lines.get(0);
+		return null;
+	}
+	
 	public ArrayList<Line> getLines(Connection con) throws SQLException {
+		return getLines(-1,con);
+	}
+	
+	public ArrayList<Line> getLines(int id, Connection con) throws SQLException {
 		
 		createTables_Line_IfNotExist(con);
 		ArrayList<Line> lineList = new ArrayList<Line>();
-		PreparedStatement stmt = con.prepareStatement("SELECT * FROM Line");
+		
+		String sql = "SELECT * FROM line";
+		if (id>0) {
+			sql += " where id="+id;
+		}
+		PreparedStatement stmt = con.prepareStatement(sql);
 		ResultSet rs = stmt.executeQuery();
 		try {
 			while (rs.next()) {
@@ -68,6 +85,7 @@ public class Access {
 		return lineId;
 	}
 	
+	
 	public int getLineMaxId(Connection con) throws SQLException {
 		int lineId = 0;
 		
@@ -94,7 +112,7 @@ public class Access {
 	     } else 
 	     {
 	         logger.info("create table courses");
-	         String sql = "CREATE TABLE IF NOT EXISTS line ( id int(11) not null AUTO_INCREMENT, lat DECIMAL(10, 8), lng DECIMAL(10, 8), type varchar(100),  vote int(11), count int(11), datecreated timestamp default now(), PRIMARY KEY (`id`)    ) ";
+	         String sql = "CREATE TABLE IF NOT EXISTS line ( id int(11) not null AUTO_INCREMENT, lat DECIMAL(16, 14), lng DECIMAL(17, 14), type varchar(100),  vote int(11), count int(11), datecreated timestamp default now(), PRIMARY KEY (`id`)    ) ";
 	                 
 	         executeStatement(sql, cnn); 
 	         logger.info("Create data");  
@@ -102,6 +120,72 @@ public class Access {
 	     }
 	         
 	 }
+	
+	 protected void createUserTablesIfNotExist(Connection cnn) {
+ 	     
+		 createTables_Line_IfNotExist(cnn);
+	           
+	       if (tableExists("users", cnn)) {
+	            logger.info("table users already exists");
+	        } else 
+	        {
+	            logger.info("create table users");
+	            String sql =
+	                    "CREATE TABLE IF NOT EXISTS `users`(\n" +
+	                            "  `id` int(11)  NOT NULL AUTO_INCREMENT, \n" +
+	                            "  `firstname` varchar(50) NOT NULL,          \n" +
+	                            "  `lastname` varchar(50) NOT NULL,           \n" +
+	                            "  `password` varchar(50) NOT NULL,           \n" +
+	                            "  `username` varchar(50) NOT NULL,           \n" +
+	                            "  `authmethod` varchar(50) NOT NULL,         \n" +
+	                            "  `lat` DECIMAL(16, 14) ,         \n" +
+	                            "  `lng` DECIMAL(17, 14) ,         \n" +
+	                            "  `datecreated` timestamp ,         \n" +	
+	                            "  `lineid` int(11) , \n" +
+	                            "  PRIMARY KEY (`id`),                    \n" +
+	                            "  FOREIGN KEY (`lineid`) REFERENCES line(id)                     \n" +
+                            ")                                            \n";
+	            
+	         
+
+	            
+	            executeStatement(sql, cnn);
+	            
+	            logger.info("Create user data");
+	            
+	            PreparedStatement stmt = null;
+	            try {
+	                stmt = cnn.prepareStatement("insert into `users` (`id`, `firstname`, `lastname`, `password`, `username`, `authmethod`, `lat`, `lng`)  VALUES (?,?,?,?,?,?,?,?)");
+	                stmt.setInt(1, 1);
+	                stmt.setString(2, "Walter");
+	                stmt.setString(3, "White");
+	                stmt.setString(4, "walterpass");
+	                stmt.setString(5, "walterwhite");
+	                stmt.setString(6, "twitter");
+	                stmt.setDouble(7, 40.71727401);
+	                stmt.setDouble(8, -74.00898606);
+	                stmt.execute();
+	                stmt.setInt(1, 2);
+	                stmt.setString(2, "Nick");
+	                stmt.setString(3, "Brody");
+	                stmt.setString(4, "nickpass");
+	                stmt.setString(5, "nickbrody");
+	                stmt.setString(6, "twitter");
+	                stmt.setDouble(7, 40.71727401);
+	                stmt.setDouble(8, -74.00898606);
+	                stmt.execute();
+	               
+	            }
+	            catch (Exception e) {
+		            logger.log(Level.WARNING, "Exception inserting data:" + e.getMessage());
+	            }
+	            finally {
+	                closeQuietly(stmt);
+	            }
+	        }
+	            
+	    }
+	 
 	
 	private void createTables_crowds_IfNotExist(Connection cnn) {
 	    if (tableExists("crowds", cnn)) {
