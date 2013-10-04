@@ -7,15 +7,18 @@ import java.lang.Integer;
   
 
 
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import json.JsonLine;
 import model.AccessManager;
+import dto.Acknowledgement;
 import dto.Line;
 
 
@@ -71,6 +74,32 @@ public class LineService {
 		System.out.print("lineId: " +lineId);			
 		return Integer.toString(lineId);
 		 
+	}
+	
+	@GET
+	@Produces("application/json")
+	@Path("/updateLineLocation")
+	public Acknowledgement updateLineLocation(@QueryParam("lineId" ) String lineId , @QueryParam("lat" ) String inlat , 
+			@QueryParam("lng" ) String inlng 
+		) {
+		System.out.print("lineId---------" +lineId);
+		System.out.print("inlat---------" +inlat);
+		System.out.print("inlng---------" +inlng);
+	
+		Acknowledgement ack = new Acknowledgement();
+		ack.setSuccess(false);		
+		try
+		{
+			double lat = helper.getDouble("lat",inlat,false,0);
+			double lng = helper.getDouble("lng",inlng,false,0);
+			int lineIdInt = helper.getInt("lineId",lineId,false,0);
+			new AccessManager().updateLineLocation(lineIdInt,lat,lng);
+			ack.setSuccess(true);
+		} catch (Exception e) {
+			ack.setReason(e.getMessage());
+		}
+		return ack;
+		
 	}
 
 

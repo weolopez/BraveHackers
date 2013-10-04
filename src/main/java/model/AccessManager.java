@@ -22,11 +22,39 @@ public class AccessManager {
 		return lineList;
 	}
 	
+	public Line getLine(int id) throws Exception {
+		Line line = new Line();
+		Access access = new Access();
+		line = access.getLine(id,getConnection());
+		return line;
+	}
+	
 	public int addLine(Line line) throws Exception {
 		//ArrayList<Line> lineList = new ArrayList<Line>();
 		Access access = new Access();
 		int lineId = access.addLine(getConnection(), line);
 		return lineId;
+	}
+	
+	public int addSmiley(int id) throws Exception {
+		Database db = new Database();
+		Connection con = db.getConnection();
+		Access access = new Access();
+		return access.addSmiley(id, con);
+	}
+	
+	public void setNewLineCount(int id, int count) throws Exception {
+		Database db = new Database();
+		Connection con = db.getConnection();
+		Access access = new Access();
+		access.setNewLineCount(id, count, con);
+	}
+	
+	public void updateLineLocation(int id, double lat, double lng) throws Exception {
+		Database db = new Database();
+		Connection con = db.getConnection();
+		Access access = new Access();
+		access.updateLineLocation(id, lat,lng, con);
 	}
 	
 	public List<Buyer> getBuyers(int userId) throws SQLException, Exception {

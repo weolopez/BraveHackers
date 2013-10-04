@@ -85,6 +85,46 @@ public class Access {
 		return lineId;
 	}
 	
+	 public int addSmiley(int id, Connection con) {
+		    int totalVotes = 0;
+		    createTables_Line_IfNotExist(con);
+	    	try {
+	    		PreparedStatement stmt = con.prepareStatement("update line set vote = vote + 1 where id=?");
+	    		stmt.setInt(1, id);
+	    		stmt.execute();
+	    		Line line = getLine(id, con);
+	    		totalVotes = line.getVote();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	    	return totalVotes;
+	    } 
+	 
+	 public void setNewLineCount(int id, int count, Connection con) {
+		    createTables_Line_IfNotExist(con);
+	    	try {
+	    		PreparedStatement stmt = con.prepareStatement("update line set count = ? where id=?");
+	    		stmt.setInt(1, count);
+	    		stmt.setInt(2, id);
+	    		stmt.execute();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	    }
+	 
+	 public void updateLineLocation(int id, double lat, double lng, Connection con) {
+		    createTables_Line_IfNotExist(con);
+	    	try {
+	    		PreparedStatement stmt = con.prepareStatement("update line set lat=?, lng=? where id=?");
+	    		stmt.setDouble(1, lat);
+	    		stmt.setDouble(2, lng);
+	    		stmt.setInt(3, id);
+	    		stmt.execute();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	    } 
+
 	
 	public int getLineMaxId(Connection con) throws SQLException {
 		int lineId = 0;
