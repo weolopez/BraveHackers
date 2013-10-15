@@ -1,8 +1,7 @@
-<section id="setAttributes" style="width: 100%;height: 100%;">
-    <h1>Type {{pin.type}}</h1>
-    <h2>{{pin.vote}} Votes</h2>
-    <p><label for="count">Count: </label> <input type="text" id="count" ng-model="pin.count"></p>    
+<section id="setAttributes" style="width: 100%;height: 100%; text-align: center;">
+    <h1>{{line.name}}</h1>
+    <h2 ng-click="peopleInFront()" ng-hide="showCounter">{{line.index}}</h2>
+    
     <p><a title="reduce" class="heart"><i class="icon-heart"></i></a></p>
-    <button ng-click="back()" class="btn-secondary">Back</button>
-    <button ng-click="editLine()" class="btn-primary">Next</button>
+    <h2>{{line.rate}}</h2>
 </section>

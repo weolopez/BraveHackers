@@ -50,7 +50,7 @@
    * ```
    */
   value('angulargmDefaults', {
-    'precision': 3,
+    'precision': 13,
     'markerConstructor': google.maps.Marker,
     'polylineConstructor': google.maps.Polyline,
     'mapOptions': {

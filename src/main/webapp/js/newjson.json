@@ -1,0 +1,117 @@
+{
+    "_id": {
+        "$oid": "525be974e4b066b5b176fedd"
+    },
+    "defaults" : {
+        maxZoom: 21,
+        minZoom: 16,
+        layers: {
+            baselayers: {
+                googleTerrain: {
+                    name: 'Google Terrain',
+                    layerType: 'TERRAIN',
+                    type: 'google'
+                }
+            }
+        }
+    },    
+    "types": [
+        {
+            "name": "beer",
+            "icon": "icon-beer",
+            "path": "BEER"
+        },
+        {
+            "name": "toilet",
+            "icon": "icon-female",
+            "path": "FEMALE"
+        },
+        {
+            "name": "food",
+            "icon": "icon-archive",
+            "path": "ARCHIVE"
+        },
+        {
+            "name": "ATM",
+            "icon": "icon-dollar",
+            "path": "MONEY"
+        },
+        {
+            "name": "Shopping",
+            "icon": "icon-shopping-cart",
+            "path": "CART"
+        },
+        {
+            "name": "Taxi",
+            "icon": "icon-truck",
+            "path": "TRUCK"
+        },
+        {
+            "name": "Doctor",
+            "icon": "icon-h-sign",
+            "path": "H_SIGN"
+        }
+    ],
+    "serverResponse": [
+        {
+            "lat": 33.74972427276576,
+            "lng": -84.3881509791679,
+            "type": "beer"
+        },
+        {
+            "lat": 33.749791735758656,
+            "lng": -84.38814896751114,
+            "type": "beer"
+        },
+        {
+            "lat": 33.749643986159576,
+            "lng": -84.38834610987374,
+            "type": "beer"
+        },
+        {
+            "lat": 33.74972427276576,
+            "lng": -84.3881509791679,
+            "type": "toilet"
+        },
+        {
+            "lat": 33.749791735758656,
+            "lng": -84.38814896751114,
+            "type": "toilet"
+        },
+        {
+            "lat": 33.749643986159576,
+            "lng": -84.38834610987374,
+            "type": "toilet"
+        },
+        {
+            "lat": 33.74972427276576,
+            "lng": -84.3881509791679,
+            "type": "food"
+        },
+        {
+            "lat": 33.749791735758656,
+            "lng": -84.38814896751114,
+            "type": "food"
+        },
+        {
+            "lat": 33.749643986159576,
+            "lng": -84.38834610987374,
+            "type": "food"
+        },
+        {
+            "lat": 33.74972427276576,
+            "lng": -84.3881509791679,
+            "type": "ATM"
+        },
+        {
+            "lat": 33.749791735758656,
+            "lng": -84.38814896751114,
+            "type": "ATM"
+        },
+        {
+            "lat": 33.749643986159576,
+            "lng": -84.38834610987374,
+            "type": "ATM"
+        }
+    ]
+}
