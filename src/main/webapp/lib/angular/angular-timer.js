@@ -12,7 +12,7 @@ angular.module('timer', [])
       replace: false,
       scope: {
         interval: '=interval',
-        startTimeAttr: '=startTime',
+        f: '=startTime',
         countdownattr: '=countdown',
         autoStart: '&autoStart'
       },

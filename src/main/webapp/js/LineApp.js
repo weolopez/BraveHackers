@@ -20,7 +20,7 @@ angular.module('lineApp', ['ngRoute', 'ngAnimate', 'leaflet-directive', 'mongola
         .factory('Line', function($mongolabResourceHttp) {
             return $mongolabResourceHttp('Line');
         })
-        .controller('EditLineCtrl', function($scope, $location, $localStorage, line) {
+        .controller('EditLineCtrl', function($scope, $location, $localStorage, line, $timeout) {
             $scope.line = line[0];
             $scope.$storage = $localStorage;
             if ($scope.line === undefined) {
@@ -29,9 +29,25 @@ angular.module('lineApp', ['ngRoute', 'ngAnimate', 'leaflet-directive', 'mongola
                 $scope.line.index = 0;
                 $scope.line.rate = 2000;
             }
+            $scope.counter = $scope.line.index*$scope.line.rate;
+            
+            $scope.onTimeout = function() {
+                $scope.counter--;
+                if ($scope.counter !== 0)
+                    mytimeout = $timeout($scope.onTimeout, 1000);
+            }
+            var mytimeout = $timeout($scope.onTimeout, 1000);
+            
+            if ($scope.line.index === 0) {
+                $timeout.cancel(mytimeout);
+            }
+            $scope.countDown = $scope.line.rate * $scope.line.index;
+
             $scope.peopleInFront = function() {
                 if ($scope.line.index == 0) {
                     $scope.showCounter = true;
+                } else {
+                    $scope.line.index--;
                 }
             }
             $scope.editLine = function() {
